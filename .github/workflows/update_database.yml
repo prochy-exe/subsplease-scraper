@@ -1,0 +1,75 @@
+name: Update SubsPlease database
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write # require to delete cache
+
+jobs:
+
+  subs-update:
+    name: Update SubsPlease database
+    runs-on: ubuntu-latest
+    env:
+      anilist-cache: anilist_cache
+      python-cache: python_cache
+    steps:
+    - name: Checkout current code
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+    - name: Restore Python Cache
+      id: python-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages
+        key: ${{ env.python-cache }}
+    - name: Restore AniList Cache
+      id: anilist-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/cache
+        key: ${{ env.anilist-cache }}
+        restore-keys: |
+          ${{ env.anilist-cache }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install anilist-helper beautifulsoup4
+    - name: Export secret into env variable and update the SubsPlease database
+      shell: bash
+      env:
+        ANILIST_KEY: ${{ secrets.ANILIST_KEY }}
+      run: | 
+        export anilist_key="$ANILIST_KEY"
+        python spscraper.py
+    - name: Setup git creds
+      shell: bash
+      run: |
+        git config --global user.email "${{ vars.EMAIL }}"
+        git config --global user.name "${{ vars.NAME }}"   
+    - name: Commit SubsPlease database
+      shell: bash
+      run: |
+        git add .
+        git commit -m "Update: `date +'%Y-%m-%d'`"
+    - name: Push to GitHub
+      run: git push
+    - name: Delete Previous Cache
+      if: ${{ steps.anilist-restore.outputs.cache-hit }}
+      continue-on-error: true
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete "${{ env.anilist-cache }}" --confirm
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Save Cache
+      uses: actions/cache/save@v3
+      with:
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/cache
+        key: ${{ env.anilist-cache }}

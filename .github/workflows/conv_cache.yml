@@ -1,0 +1,43 @@
+name: Convert local cache to github cache
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: write # require to delete cache
+
+jobs:
+
+  conv-cache:
+    name: Convert cache
+    runs-on: ubuntu-latest
+    env:
+      cache-key: anilist_cache
+    steps:
+    - name: Checkout current code
+      uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install anilist-helper
+    - name: Download cache and extract it to appropriate dir
+      shell: bash
+      run: |
+        curl -O ${{ vars.CACHE_URL }}
+        unzip cache.zip -d /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/
+    - name: Delete Previous Cache
+      continue-on-error: true
+      run: |
+        gh extension install actions/gh-actions-cache
+        gh actions-cache delete "${{ env.cache-key }}" --confirm
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Save Cache
+      uses: actions/cache/save@v3
+      with:
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/cache
+        key: ${{ env.cache-key }}
