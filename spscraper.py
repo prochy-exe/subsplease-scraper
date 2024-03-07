@@ -243,13 +243,10 @@ def update_list(subs_list):
                     data = get_data(item_url)
                     anilist_data = create_season_keys(data)
                     subs_list.update(anilist_data)
-                    not_found.append([anime_title, item_url])
                 except:
                     continue
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
-    for missing in not_found:
-        print(missing)
     return subs_list
 
 def gen_cache():
@@ -417,8 +414,6 @@ def update_entries(subs_entry):
             remote_entry = get_data(entry_url)
             modified_entry = create_season_keys({key: remote_entry[remote_key]})
             copied_entries.update(modified_entry)
-            print(key, entry_url)
-    if missing_keys: print(missing_keys)
     return copied_entries
     
 #Utils
