@@ -399,6 +399,13 @@ def get_subsplease_id(url):
  
 def update_entries(subs_entry):
     from anilisthelper import get_anime_info
+    
+    def filter_404_links(links):
+        for link in links:
+            response = requests.head(link)
+            if response.status_code == 404:
+                return 'reset'
+    
     copied_entries = copy.deepcopy(subs_entry)
     checked_keys = []
     missing_keys = []
@@ -413,7 +420,16 @@ def update_entries(subs_entry):
             entry_url = subs_entry[key]['url']
             remote_entry = get_data(entry_url)
             modified_entry = create_season_keys({key: remote_entry[remote_key]})
-            copied_entries.update(modified_entry)
+            last_url = modified_entry[key]['nyasii_links'][-1]
+            current_urls = copied_entries[key]['nyasii_links']
+            if last_url not in current_urls:
+                current_urls.append(last_url)
+            filtered_urls = filter_404_links(current_urls)
+            if filtered_urls == 'reset':
+                filtered_urls = modified_entry[key]['nyasii_links']
+            else:
+                filtered_urls = current_urls
+            copied_entries[key]['nyasii_links'] = filtered_urls
     return copied_entries
     
 #Utils
