@@ -11863,7 +11863,8 @@
             "https://nyaa.si/view/1785687",
             "https://nyaa.si/view/1788469",
             "https://nyaa.si/view/1791448",
-            "https://nyaa.si/view/1794541"
+            "https://nyaa.si/view/1794541",
+            "https://nyaa.si/view/1797477"
         ]
     },
     "131019": {
@@ -13372,6 +13373,49 @@
         "id": "723",
         "nyasii_links": [
             "https://nyaa.si/view/1796775"
+        ]
+    },
+    "156415": {
+        "url": "https://subsplease.org/shows/dainanaoji",
+        "id": "730",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797720"
+        ]
+    },
+    "166372": {
+        "url": "https://subsplease.org/shows/dekisoko",
+        "id": "728",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797726",
+            "https://nyaa.si/view/1797729"
+        ]
+    },
+    "144176": {
+        "url": "https://subsplease.org/shows/kami-wa-game-ni-ueteiru",
+        "id": "726",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797530"
+        ]
+    },
+    "169417": {
+        "url": "https://subsplease.org/shows/re-monster",
+        "id": "727",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797533"
+        ]
+    },
+    "155657": {
+        "url": "https://subsplease.org/shows/shuumatsu-train-doko-e-iku",
+        "id": "724",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797516"
+        ]
+    },
+    "145728": {
+        "url": "https://subsplease.org/shows/spice-and-wolf-2024",
+        "id": "729",
+        "nyasii_links": [
+            "https://nyaa.si/view/1797724"
         ]
     }
 }
