@@ -7491,7 +7491,8 @@
             "https://nyaa.si/view/1786372",
             "https://nyaa.si/view/1789151",
             "https://nyaa.si/view/1792310",
-            "https://nyaa.si/view/1795428"
+            "https://nyaa.si/view/1795428",
+            "https://nyaa.si/view/1798198"
         ]
     },
     "143327": {
@@ -9681,7 +9682,8 @@
             "https://nyaa.si/view/1786316",
             "https://nyaa.si/view/1789106",
             "https://nyaa.si/view/1792253",
-            "https://nyaa.si/view/1795350"
+            "https://nyaa.si/view/1795350",
+            "https://nyaa.si/view/1798156"
         ]
     },
     "120646": {
@@ -13416,6 +13418,13 @@
         "id": "729",
         "nyasii_links": [
             "https://nyaa.si/view/1797724"
+        ]
+    },
+    "155890": {
+        "url": "https://subsplease.org/shows/bartender-kami-no-glass",
+        "id": "731",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798296"
         ]
     }
 }
