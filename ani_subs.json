@@ -1744,7 +1744,8 @@
             "https://nyaa.si/view/1787216",
             "https://nyaa.si/view/1789537",
             "https://nyaa.si/view/1792743",
-            "https://nyaa.si/view/1795834"
+            "https://nyaa.si/view/1795834",
+            "https://nyaa.si/view/1798695"
         ]
     },
     "101705": {
@@ -7153,7 +7154,8 @@
             "https://nyaa.si/view/1786681",
             "https://nyaa.si/view/1789543",
             "https://nyaa.si/view/1792753",
-            "https://nyaa.si/view/1795784"
+            "https://nyaa.si/view/1795784",
+            "https://nyaa.si/view/1798706"
         ]
     },
     "112302": {
@@ -13425,6 +13427,41 @@
         "id": "731",
         "nyasii_links": [
             "https://nyaa.si/view/1798296"
+        ]
+    },
+    "165855": {
+        "url": "https://subsplease.org/shows/hananoi-kun-to-koi-no-yamai",
+        "id": "734",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798643"
+        ]
+    },
+    "166828": {
+        "url": "https://subsplease.org/shows/henjin-no-salad-bowl",
+        "id": "732",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798735"
+        ]
+    },
+    "156023": {
+        "url": "https://subsplease.org/shows/madome",
+        "id": "735",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798582"
+        ]
+    },
+    "163270": {
+        "url": "https://subsplease.org/shows/wind-breaker",
+        "id": "733",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798673"
+        ]
+    },
+    "155908": {
+        "url": "https://subsplease.org/shows/yuru-camp-s3",
+        "id": "736",
+        "nyasii_links": [
+            "https://nyaa.si/view/1798540"
         ]
     }
 }
