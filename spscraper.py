@@ -556,7 +556,8 @@ skip_list = ["Lee's Detective Agency",
             'Tsugumomo S2 OVA',
             'Edens Zero',
             'Boruto - Naruto Next Generations',
-            'One Piece']
+            'One Piece',
+            'Boku No Hero Academia Memories']
 
 cache = load_cache()
 updated_list = update_list(cache)
