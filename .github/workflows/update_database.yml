@@ -29,18 +29,19 @@ jobs:
       with:
         path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages
         key: ${{ env.python-cache }}
-    - name: Restore AniList Cache
-      id: anilist-restore
-      uses: actions/cache/restore@v3
-      with:
-        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/cache
-        key: ${{ env.anilist-cache }}
-        restore-keys: |
-          ${{ env.anilist-cache }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install anilist-helper beautifulsoup4
+    - name: Restore AniList Cache
+      continue-on-error: false
+      id: anilist-restore
+      uses: actions/cache/restore@v3
+      with:
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/cache
+        key: ${{ env.anilist-cache }}
+        restore-keys: |
+          ${{ env.anilist-cache }}
     - name: Export secret into env variable and update the SubsPlease database
       shell: bash
       env:
@@ -55,10 +56,12 @@ jobs:
         git config --global user.name "${{ vars.NAME }}"   
     - name: Commit SubsPlease database
       shell: bash
+      continue-on-error: true
       run: |
         git add .
         git commit -m "Update: `date +'%Y-%m-%d'`"
     - name: Push to GitHub
+      continue-on-error: true
       run: git push
     - name: Delete Previous Cache
       if: ${{ steps.anilist-restore.outputs.cache-hit }}
@@ -71,5 +74,5 @@ jobs:
     - name: Save Cache
       uses: actions/cache/save@v3
       with:
-        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/data/cache
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/cache
         key: ${{ env.anilist-cache }}

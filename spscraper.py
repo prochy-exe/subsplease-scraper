@@ -53,7 +53,8 @@ def subs_to_ani(subs_entry, reverse = False):
             checked_id = manually_adjusted_strings[anime_key]
         else:
             checked_id = get_input(f'Type in AniList ID of the anime(SubsPlease match: {anime_key}): ', False, str)
-            manually_adjusted_strings[anime_key] = checked_id
+            checked_id = checked_id if checked_id else None
+            manually_adjusted_strings[anime_key] = checked_id if checked_id else None
         if manually_adjusted_strings:
             save_json(manual_adjustments_path, manually_adjusted_strings, True)
         return checked_id
@@ -66,6 +67,7 @@ def subs_to_ani(subs_entry, reverse = False):
         anime_id = get_id(title)
         if not anime_id:
             anime_id = check_manual_adjust(key, manually_adjusted_strings)
+            if not anime_id: continue
         else:
             anime_id = str(anime_id)
             info = get_anime_info(anime_id)[anime_id]
@@ -86,7 +88,8 @@ def get_ani_id_from_subs_title(subs_entry, title, reverse = False):
     else:
         anime_dict = subs_to_ani(subs_entry, True)
     anime_id = anime_dict[title]
-    save_json(conv_dict_path, {anime_id: title}, False)
+    if anime_id:
+      save_json(conv_dict_path, {anime_id: title}, False)
     return anime_id
 
 def create_season_keys(subs_entry):
@@ -100,6 +103,7 @@ def create_season_keys(subs_entry):
             ani_key = key
         except ValueError:
             ani_key = get_ani_id_from_subs_title({key: subs_entry[key]}, key)
+            if not ani_key: return None
         subs_list_new[ani_key] = subs_entry[key]
         if not test_int:
             del subs_list_new[key]
@@ -242,7 +246,7 @@ def update_list(subs_list):
                 try:
                     data = get_data(item_url)
                     anilist_data = create_season_keys(data)
-                    subs_list.update(anilist_data)
+                    if anilist_data: subs_list.update(anilist_data)
                 except:
                     continue
     else:
@@ -524,6 +528,8 @@ def check_cache():
         print(anime_id)
 
 def generate_conv_keys():
+    cache = load_cache()
+    
     def get_title(url):
         # Send a GET request to the URL
         response = requests.get(url)
@@ -561,8 +567,7 @@ skip_list = ["Lee's Detective Agency",
             'Tsugumomo S2 OVA',
             'Edens Zero',
             'Boruto - Naruto Next Generations',
-            'One Piece',
-            'Boku No Hero Academia Memories']
+            'One Piece']
 
 cache = load_cache()
 updated_list = update_list(cache)
