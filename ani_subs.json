@@ -6682,11 +6682,11 @@
         ]
     },
     "138260": {
-      "url": "https://subsplease.org/shows/link-click",
-      "id": "185",
-      "nyasii_links": [
-        "https://nyaa.si/view/1426518"
-      ]
+        "url": "https://subsplease.org/shows/link-click",
+        "id": "185",
+        "nyasii_links": [
+            "https://nyaa.si/view/1426518"
+        ]
     },
     "114862": {
         "url": "https://subsplease.org/shows/log-horizon-s3",
@@ -13628,7 +13628,8 @@
         "url": "https://subsplease.org/shows/hibike-euphonium-s3",
         "id": "751",
         "nyasii_links": [
-            "https://nyaa.si/view/1800137"
+            "https://nyaa.si/view/1800137",
+            "https://nyaa.si/view/1803873"
         ]
     },
     "152302": {
