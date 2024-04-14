@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install anilist-helper beautifulsoup4
+        pip install anilist-helper beautifulsoup4 pynyaasi
     - name: Restore AniList Cache
       continue-on-error: false
       id: anilist-restore
@@ -76,3 +76,5 @@ jobs:
       with:
         path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/cache
         key: ${{ env.anilist-cache }}
+    - name: Check torrent links
+      run: python torrent_verification.py

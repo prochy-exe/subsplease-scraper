@@ -569,7 +569,8 @@ skip_list = ["Lee's Detective Agency",
             'Boruto - Naruto Next Generations',
             'One Piece']
 
-cache = load_cache()
-updated_list = update_list(cache)
-updated_entries = update_entries(updated_list)
-save_cache(updated_entries)
+if __name__ == "__main__":
+  cache = load_cache()
+  updated_list = update_list(cache)
+  updated_entries = update_entries(updated_list)
+  save_cache(updated_entries)
