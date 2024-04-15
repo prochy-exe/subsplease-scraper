@@ -42,8 +42,8 @@ def verify_torrents():
     ]
     for anime in cache:
       if anime not in skip_list_ids:
-      anime_links = cache[anime]['nyasii_links']
-      verify_torrent(anime, anime_links)
+        anime_links = cache[anime]['nyasii_links']
+        verify_torrent(anime, anime_links)
                 
 verify_torrents()
 if missing_entries:
