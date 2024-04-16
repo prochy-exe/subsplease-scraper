@@ -124,7 +124,7 @@ def create_season_keys(subs_entry):
                         hasSeason = True
                         break
                     elif anime_relations[relation]['type'] == 'PREQUEL' and relation in current_cache:
-                        previous_episodes = len(current_cache[relation]['nyasii_links'])
+                        previous_episodes = len(current_cache[relation]['nyaasi_links'])
                         break
                     else:
                         hasSeason = False
@@ -158,8 +158,8 @@ def create_season_keys(subs_entry):
                         starting_episode = 1                        
                     else:
                         break
-                links = subs_entry[key]['nyasii_links']
-                link_amount = len(subs_entry[key]['nyasii_links'])
+                links = subs_entry[key]['nyaasi_links']
+                link_amount = len(subs_entry[key]['nyaasi_links'])
                 episode_amount = find_key(anime_info, 'total_eps')
                 if not episode_amount:
                     sorted_magnets = []
@@ -170,7 +170,7 @@ def create_season_keys(subs_entry):
                             x += 1
                         except:
                             break
-                    subs_list_new[ani_key]['nyasii_links'] = sorted_magnets
+                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
                     break
                 if link_amount > episode_amount:
                     checked_episodes += previous_episodes
@@ -206,13 +206,13 @@ def create_season_keys(subs_entry):
                     leftover_magnets = []
                     leftover_magnets.append(links[checked_episodes])
                 try:
-                    subs_list_new[ani_key]['nyasii_links'] = sorted_magnets
+                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
                 except:
                     subs_list_new[ani_key] = copy.deepcopy(subs_entry[key])
-                    subs_list_new[ani_key]['nyasii_links'] = sorted_magnets
+                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
                 cleared_ids.append(ani_key)
                 if season_id is not None:
-                    subs_list_new[season_id]['nyasii_links'] = leftover_magnets
+                    subs_list_new[season_id]['nyaasi_links'] = leftover_magnets
                 else:
                     break
             ani_key = season_id
@@ -271,14 +271,14 @@ def subspleaseinfo_bh(search_string):
     items_dict[search_string]['id'] = get_subsplease_id(items_dict[search_string]['url'])
     torrent_link = get_torrent_link_bh(items_dict[search_string]['id'])[0]
     skip_list = get_torrent_link_bh(items_dict[search_string]['id'])[1]
-    items_dict[search_string]['nyasii_links'] = torrent_link
+    items_dict[search_string]['nyaasi_links'] = torrent_link
     
     for skip in skip_list:
         items_dict[skip] = {}
         items_dict[skip]['url'] = url + '/' + json_data[next(iter(json_data.keys()))]['page']
         items_dict[skip]['id'] = get_subsplease_id(items_dict[search_string]['url'])
         torrent_link = skip_list[skip]
-        items_dict[skip]['nyasii_links'] = torrent_link
+        items_dict[skip]['nyaasi_links'] = torrent_link
 
     return items_dict
     #save_cache(items_dict) 
@@ -307,7 +307,7 @@ def get_data(url):
         item[title]['url'] = url
         item[title]['id'] = sid_value
         torrent_link = get_torrent_link(item[title]['id'])
-        item[title]['nyasii_links'] = torrent_link
+        item[title]['nyaasi_links'] = torrent_link
         
         return item
     else:
@@ -425,20 +425,20 @@ def update_entries(subs_entry):
             remote_entry = get_data(entry_url)
             modified_entry = create_season_keys({key: remote_entry[remote_key]})
             try:
-                last_url = modified_entry[key]['nyasii_links'][-1]
+                last_url = modified_entry[key]['nyaasi_links'][-1]
             except IndexError:
-                print("DEBUG: IndexError occurred while accessing 'nyasii_links'")
+                print("DEBUG: IndexError occurred while accessing 'nyaasi_links'")
                 print(remote_entry)
                 exit(1)
-            current_urls = copied_entries[key]['nyasii_links']
+            current_urls = copied_entries[key]['nyaasi_links']
             if last_url not in current_urls:
                 current_urls.append(last_url)
             filtered_urls = filter_404_links(current_urls)
             if filtered_urls == 'reset':
-                filtered_urls = modified_entry[key]['nyasii_links']
+                filtered_urls = modified_entry[key]['nyaasi_links']
             else:
                 filtered_urls = current_urls
-            copied_entries[key]['nyasii_links'] = filtered_urls
+            copied_entries[key]['nyaasi_links'] = filtered_urls
     return copied_entries
     
 #Utils
@@ -521,7 +521,7 @@ def check_cache():
         anime_data = get_anime_info(entry)
         anime_amount = find_key(anime_data, 'total_eps')
         anime_status = find_key(anime_data, 'status')
-        links_amount = len(cache[entry]['nyasii_links'])
+        links_amount = len(cache[entry]['nyaasi_links'])
         if links_amount != anime_amount and anime_status != 'RELEASING':
             attention.append([entry, 'https://anilist.co/anime/' + entry, str(links_amount)+'/'+str(anime_amount)])
     for anime_id in attention:
