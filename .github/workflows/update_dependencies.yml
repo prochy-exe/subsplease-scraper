@@ -25,6 +25,13 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: '3.x'
+    - name: Determine Python version
+      id: python_version
+      run: |
+        full_version=$(python --version | cut -d' ' -f2)
+        major_version=$(echo $full_version | grep -oE '^[^.]+.[^.]+')
+        echo "::set-output name=full_version::$full_version"
+        echo "::set-output name=major_version::$major_version"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
@@ -39,5 +46,5 @@ jobs:
     - name: Save Cache
       uses: actions/cache/save@v3
       with:
-        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages
+        path: /opt/hostedtoolcache/Python/${{ steps.python_version.outputs.full_version }}/x64/lib/python${{ steps.python_version.outputs.major_version }}/site-packages
         key: ${{ env.cache-key }}
