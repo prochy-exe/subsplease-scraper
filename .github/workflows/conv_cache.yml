@@ -23,12 +23,12 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install anilist-helper
+        pip install alfetcher
     - name: Download cache and extract it to appropriate dir
       shell: bash
       run: |
         curl -o cache.zip ${{ vars.CACHE_URL }}
-        unzip cache.zip -d /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/cache
+        find /opt/hostedtoolcache/Python/*/x64/lib/ -maxdepth 2 -mindepth 2 -type d -name "site-packages" -exec sh -c 'unzip cache.zip -d "$1/alfetcher/"' _ {} \;
     - name: Delete Previous Cache
       continue-on-error: true
       run: |
@@ -39,5 +39,5 @@ jobs:
     - name: Save Cache
       uses: actions/cache/save@v3
       with:
-        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/anilisthelper/cache
+        path: /opt/hostedtoolcache/Python/3.12.2/x64/lib/python3.12/site-packages/alfetcher/cache
         key: ${{ env.cache-key }}

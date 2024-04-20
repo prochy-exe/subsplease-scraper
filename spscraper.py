@@ -44,7 +44,7 @@ def get_all_anime():
     return items_dict
 
 def subs_to_ani(subs_entry, reverse = False):
-    from anilisthelper import get_id, get_anime_info
+    from alfetcher import get_id, get_anime_info
     
     def check_manual_adjust(anime_key, manually_adjusted_strings):
         if not manually_adjusted_strings:
@@ -93,7 +93,7 @@ def get_ani_id_from_subs_title(subs_entry, title, reverse = False):
     return anime_id
 
 def create_season_keys(subs_entry):
-    from anilisthelper import get_anime_info
+    from alfetcher import get_anime_info
     current_cache = load_cache()
     subs_list_new = copy.deepcopy(subs_entry)
     test_int = None
@@ -402,7 +402,7 @@ def get_subsplease_id(url):
         print("Failed to retrieve webpage. Status code:", response.status_code)
  
 def update_entries(subs_entry):
-    from anilisthelper import get_anime_info
+    from alfetcher import get_anime_info
     
     def filter_404_links(links):
         for link in links:
@@ -514,7 +514,7 @@ def get_input(prompt, lower = True, data_type = str):
             print("Invalid input. Please enter a valid", data_type.__name__)
 
 def check_cache():
-    from anilisthelper import get_anime_info
+    from alfetcher import get_anime_info
     attention = []
     cache = load_cache()
     for entry in cache:
