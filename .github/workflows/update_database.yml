@@ -70,6 +70,8 @@ jobs:
     - name: Push to GitHub
       continue-on-error: true
       run: git push
+    - name: Check torrent links
+      run: python torrent_verification.py
     - name: Delete Previous Cache
       if: ${{ steps.anilist-restore.outputs.cache-hit }}
       continue-on-error: true
@@ -83,5 +85,3 @@ jobs:
       with:
         path: /opt/hostedtoolcache/Python/${{ steps.python_version.outputs.full_version }}/x64/lib/python${{ steps.python_version.outputs.major_version }}/site-packages/alfetcher/cache
         key: ${{ env.anilist-cache }}
-    - name: Check torrent links
-      run: python torrent_verification.py

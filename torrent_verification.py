@@ -1,5 +1,6 @@
 import re, time
 from pynyaasi.nyaasi import NyaaSiClient
+import alfetcher
 import requests
 from spscraper import load_cache
 
@@ -38,11 +39,14 @@ def verify_torrent(anime, torrents_local):
             try:
                 resource = client.get_resource(int(torrent[len('https://nyaa.si/view/'):])).title
                 break
-            except requests.exceptions.HTTPError:
+            except requests.exceptions.HTTPError as e:
                 time.sleep(default_timeout)
                 default_timeout += 5
-            except:
+                print(e)
+            except Exception as e:
                 unknown_errors.append(torrent)
+                print(e)
+                return
         if not ('- ' + append_prefix(expected_ep)) in resource:
             missing_entries.append(f'missing ep: {expected_ep}, {anime}')
         expected_ep += 1
@@ -58,14 +62,18 @@ def verify_torrents():
         '122148'
     ]
     for anime in cache:
-        if anime not in skip_list_ids:
+        anime_info = alfetcher.get_anime_info(anime)[anime]
+        if anime not in skip_list_ids and anime_info['status'] == 'RELEASING':
+            print(f'verifying {anime}')
             anime_links = cache[anime]['nyaasi_links']
             verify_torrent(anime, anime_links)
                 
 verify_torrents()
-if missing_entries:
-    for entry in missing_entries:
-        print(entry+'\n')
-    for error in unknown_errors:
-        print(error+'\n')
+if missing_entries or unknown_errors:
+    if missing_entries:
+        for entry in missing_entries:
+            print(entry+'\n')
+    if unknown_errors:
+        for error in unknown_errors:
+            print(error+'\n')
     exit(1)
