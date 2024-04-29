@@ -13886,5 +13886,31 @@
             "https://nyaa.si/view/1805656",
             "https://nyaa.si/view/1808689"
         ]
+    },
+    "101992": {
+        "url": "https://subsplease.org/shows/hibike-euphonium-chikai-no-finale",
+        "id": "766",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1805137"
+        ]
+    },
+    "158988": {
+        "url": "https://subsplease.org/shows/knights-of-the-zodiac-saint-seiya-s2-part-2",
+        "id": "725",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1797522",
+            "https://nyaa.si/view/1797527",
+            "https://nyaa.si/view/1800600",
+            "https://nyaa.si/view/1804568",
+            "https://nyaa.si/view/1807916",
+            "https://nyaa.si/view/1811570"
+        ]
+    },
+    "87502": {
+        "url": "https://subsplease.org/shows/megaton-kyuu-musashi",
+        "id": "768",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1811370"
+        ]
     }
 }
