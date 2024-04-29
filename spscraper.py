@@ -212,7 +212,10 @@ def create_season_keys(subs_entry):
                     subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
                 cleared_ids.append(ani_key)
                 if season_id is not None:
-                    subs_list_new[season_id]['nyaasi_links'] = leftover_magnets
+                    try:
+                        subs_list_new[season_id]['nyaasi_links'] = leftover_magnets
+                    except:
+                        hasSeason = False
                 else:
                     break
             ani_key = season_id
@@ -243,12 +246,9 @@ def update_list(subs_list):
             anime_title = link.a['title']
             item_url = base + link.a['href']
             if anime_title not in skip_list and item_url not in list_urls:
-                try:
-                    data = get_data(item_url)
-                    anilist_data = create_season_keys(data)
-                    if anilist_data: subs_list.update(anilist_data)
-                except:
-                    continue
+                data = get_data(item_url)
+                anilist_data = create_season_keys(data)
+                if anilist_data: subs_list.update(anilist_data)
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
     return subs_list
