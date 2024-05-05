@@ -163,7 +163,7 @@ def create_season_keys(subs_entry):
                 episode_amount = find_key(anime_info, 'total_eps')
                 if not episode_amount:
                     sorted_magnets = []
-                    if link_amount - previous_episodes < 0: previous_episodes = 0
+                    if link_amount - previous_episodes < 1: previous_episodes = 0
                     for x in range(previous_episodes, link_amount):
                         try:
                             sorted_magnets.append(links[x])
