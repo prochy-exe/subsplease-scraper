@@ -1517,7 +1517,8 @@
             "https://nyaa.si/view/1803821",
             "https://nyaa.si/view/1807428",
             "https://nyaa.si/view/1811112",
-            "https://nyaa.si/view/1814660"
+            "https://nyaa.si/view/1814660",
+            "https://nyaa.si/view/1817980"
         ]
     },
     "164204": {
@@ -12729,7 +12730,8 @@
             "https://nyaa.si/view/1803589",
             "https://nyaa.si/view/1807229",
             "https://nyaa.si/view/1810964",
-            "https://nyaa.si/view/1814487"
+            "https://nyaa.si/view/1814487",
+            "https://nyaa.si/view/1817828"
         ]
     },
     "157765": {
@@ -13717,7 +13719,8 @@
             "https://nyaa.si/view/1803873",
             "https://nyaa.si/view/1807466",
             "https://nyaa.si/view/1811148",
-            "https://nyaa.si/view/1814716"
+            "https://nyaa.si/view/1814716",
+            "https://nyaa.si/view/1818026"
         ]
     },
     "152302": {
@@ -13740,7 +13743,8 @@
             "https://nyaa.si/view/1804011",
             "https://nyaa.si/view/1807625",
             "https://nyaa.si/view/1811261",
-            "https://nyaa.si/view/1814863"
+            "https://nyaa.si/view/1814863",
+            "https://nyaa.si/view/1818176"
         ]
     },
     "160090": {
@@ -13886,7 +13890,8 @@
             "https://nyaa.si/view/1804030",
             "https://nyaa.si/view/1807654",
             "https://nyaa.si/view/1811293",
-            "https://nyaa.si/view/1814881"
+            "https://nyaa.si/view/1814881",
+            "https://nyaa.si/view/1818202"
         ]
     },
     "162889": {
@@ -13943,7 +13948,8 @@
             "https://nyaa.si/view/1803989",
             "https://nyaa.si/view/1807611",
             "https://nyaa.si/view/1811244",
-            "https://nyaa.si/view/1814837"
+            "https://nyaa.si/view/1814837",
+            "https://nyaa.si/view/1818158"
         ]
     },
     "163078": {
@@ -13995,6 +14001,13 @@
         "id": "768",
         "nyaasi_links": [
             "https://nyaa.si/view/1811370"
+        ]
+    },
+    "166240": {
+        "url": "https://subsplease.org/shows/kimetsu-no-yaiba-hashira-geiko-hen",
+        "id": "770",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1818326"
         ]
     }
 }
