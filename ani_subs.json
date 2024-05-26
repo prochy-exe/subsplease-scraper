@@ -13533,7 +13533,8 @@
             "https://nyaa.si/view/1810624",
             "https://nyaa.si/view/1814127",
             "https://nyaa.si/view/1817370",
-            "https://nyaa.si/view/1820786"
+            "https://nyaa.si/view/1820786",
+            "https://nyaa.si/view/1824065"
         ]
     },
     "156415": {
@@ -13811,7 +13812,8 @@
             "https://nyaa.si/view/1810645",
             "https://nyaa.si/view/1814142",
             "https://nyaa.si/view/1817402",
-            "https://nyaa.si/view/1820828"
+            "https://nyaa.si/view/1820828",
+            "https://nyaa.si/view/1824078"
         ]
     },
     "170503": {
@@ -13824,7 +13826,8 @@
             "https://nyaa.si/view/1810840",
             "https://nyaa.si/view/1814280",
             "https://nyaa.si/view/1817626",
-            "https://nyaa.si/view/1820988"
+            "https://nyaa.si/view/1820988",
+            "https://nyaa.si/view/1824303"
         ]
     },
     "174653": {
@@ -13862,7 +13865,8 @@
             "https://nyaa.si/view/1810699",
             "https://nyaa.si/view/1814177",
             "https://nyaa.si/view/1817461",
-            "https://nyaa.si/view/1820875"
+            "https://nyaa.si/view/1820875",
+            "https://nyaa.si/view/1824163"
         ]
     },
     "170130": {
@@ -13915,7 +13919,8 @@
             "https://nyaa.si/view/1810800",
             "https://nyaa.si/view/1814321",
             "https://nyaa.si/view/1817586",
-            "https://nyaa.si/view/1821005"
+            "https://nyaa.si/view/1821005",
+            "https://nyaa.si/view/1824267"
         ]
     },
     "159039": {
@@ -13980,7 +13985,8 @@
             "https://nyaa.si/view/1810810",
             "https://nyaa.si/view/1814234",
             "https://nyaa.si/view/1817582",
-            "https://nyaa.si/view/1820955"
+            "https://nyaa.si/view/1820955",
+            "https://nyaa.si/view/1824268"
         ]
     },
     "146867": {
@@ -13993,7 +13999,8 @@
             "https://nyaa.si/view/1810861",
             "https://nyaa.si/view/1814285",
             "https://nyaa.si/view/1817654",
-            "https://nyaa.si/view/1821017"
+            "https://nyaa.si/view/1821017",
+            "https://nyaa.si/view/1824314"
         ]
     },
     "158709": {
@@ -14032,7 +14039,8 @@
             "https://nyaa.si/view/1810727",
             "https://nyaa.si/view/1814200",
             "https://nyaa.si/view/1817499",
-            "https://nyaa.si/view/1821006"
+            "https://nyaa.si/view/1821006",
+            "https://nyaa.si/view/1824201"
         ]
     },
     "150085": {
@@ -14083,6 +14091,13 @@
         "id": "770",
         "nyaasi_links": [
             "https://nyaa.si/view/1818326"
+        ]
+    },
+    "146609": {
+        "url": "https://subsplease.org/shows/dead-dead-demons-dededede-destruction",
+        "id": "771",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1824325"
         ]
     }
 }
