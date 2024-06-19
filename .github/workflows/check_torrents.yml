@@ -9,7 +9,7 @@ permissions:
 jobs:
 
   database-check:
-    name: Update SubsPlease database
+    name: Verify database
     runs-on: ubuntu-latest
     env:
       anilist-cache: anilist_cache
@@ -31,6 +31,7 @@ jobs:
     - name: Restore Python Cache
       id: python-restore
       uses: actions/cache/restore@v3
+      fail-on-cache-miss: true
       with:
         path: /opt/hostedtoolcache/Python/${{ steps.python_version.outputs.full_version }}/x64/lib/python${{ steps.python_version.outputs.major_version }}/site-packages
         key: ${{ env.python-cache }}
