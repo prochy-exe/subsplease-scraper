@@ -13823,7 +13823,8 @@
             "https://nyaa.si/view/1826033",
             "https://nyaa.si/view/1829248",
             "https://nyaa.si/view/1832580",
-            "https://nyaa.si/view/1835549"
+            "https://nyaa.si/view/1835549",
+            "https://nyaa.si/view/1838280"
         ]
     },
     "122511": {
@@ -13902,7 +13903,8 @@
             "https://nyaa.si/view/1826006",
             "https://nyaa.si/view/1829231",
             "https://nyaa.si/view/1832571",
-            "https://nyaa.si/view/1835523"
+            "https://nyaa.si/view/1835523",
+            "https://nyaa.si/view/1838249"
         ]
     },
     "153288": {
@@ -13954,7 +13956,8 @@
             "https://nyaa.si/view/1826127",
             "https://nyaa.si/view/1829604",
             "https://nyaa.si/view/1832683",
-            "https://nyaa.si/view/1835654"
+            "https://nyaa.si/view/1835654",
+            "https://nyaa.si/view/1838376"
         ]
     },
     "136804": {
@@ -14073,7 +14076,8 @@
             "https://nyaa.si/view/1825976",
             "https://nyaa.si/view/1829204",
             "https://nyaa.si/view/1832543",
-            "https://nyaa.si/view/1835494"
+            "https://nyaa.si/view/1835494",
+            "https://nyaa.si/view/1838220"
         ]
     },
     "169698": {
@@ -14283,6 +14287,13 @@
         "id": "771",
         "nyaasi_links": [
             "https://nyaa.si/view/1824325"
+        ]
+    },
+    "173584": {
+        "url": "https://subsplease.org/shows/maougun-saikyou-no-majutsushi-wa-ningen-datta",
+        "id": "773",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1838356"
         ]
     }
 }
