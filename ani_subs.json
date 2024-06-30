@@ -2331,7 +2331,8 @@
             "https://nyaa.si/view/1827315",
             "https://nyaa.si/view/1830586",
             "https://nyaa.si/view/1833738",
-            "https://nyaa.si/view/1836644"
+            "https://nyaa.si/view/1836644",
+            "https://nyaa.si/view/1839304"
         ]
     },
     "114811": {
@@ -13923,7 +13924,8 @@
             "https://nyaa.si/view/1827401",
             "https://nyaa.si/view/1830630",
             "https://nyaa.si/view/1833789",
-            "https://nyaa.si/view/1836678"
+            "https://nyaa.si/view/1836678",
+            "https://nyaa.si/view/1839357"
         ]
     },
     "170503": {
@@ -13941,7 +13943,8 @@
             "https://nyaa.si/view/1827578",
             "https://nyaa.si/view/1830821",
             "https://nyaa.si/view/1833972",
-            "https://nyaa.si/view/1836856"
+            "https://nyaa.si/view/1836856",
+            "https://nyaa.si/view/1839509"
         ]
     },
     "174653": {
@@ -14151,7 +14154,8 @@
             "https://nyaa.si/view/1827550",
             "https://nyaa.si/view/1830774",
             "https://nyaa.si/view/1833945",
-            "https://nyaa.si/view/1836827"
+            "https://nyaa.si/view/1836827",
+            "https://nyaa.si/view/1839483"
         ]
     },
     "146867": {
@@ -14169,7 +14173,8 @@
             "https://nyaa.si/view/1827593",
             "https://nyaa.si/view/1830837",
             "https://nyaa.si/view/1833988",
-            "https://nyaa.si/view/1836874"
+            "https://nyaa.si/view/1836874",
+            "https://nyaa.si/view/1839521"
         ]
     },
     "158709": {
@@ -14297,6 +14302,13 @@
         "id": "773",
         "nyaasi_links": [
             "https://nyaa.si/view/1838356"
+        ]
+    },
+    "175450": {
+        "url": "https://subsplease.org/shows/boku-no-tsuma-wa-kanjou-ga-nai",
+        "id": "774",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1839389"
         ]
     }
 }
