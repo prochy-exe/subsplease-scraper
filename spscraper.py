@@ -426,8 +426,8 @@ def update_entries(subs_entry):
             modified_entry = create_season_keys({key: remote_entry[remote_key]})
             try:
                 last_url = modified_entry[key]['nyaasi_links'][-1]
-            except IndexError:
-                print("DEBUG: IndexError occurred while accessing 'nyaasi_links'")
+            except:
+                print("DEBUG: Error occurred while accessing 'nyaasi_links'")
                 print(remote_entry)
                 exit(1)
             current_urls = copied_entries[key]['nyaasi_links']
