@@ -13678,7 +13678,8 @@
             "https://nyaa.si/view/1828649",
             "https://nyaa.si/view/1831998",
             "https://nyaa.si/view/1834989",
-            "https://nyaa.si/view/1837671"
+            "https://nyaa.si/view/1837671",
+            "https://nyaa.si/view/1840230"
         ]
     },
     "155890": {
@@ -14315,5 +14316,17 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1839389"
         ]
+    },
+    "163292": {
+        "url": "https://subsplease.org/shows/shinmai-ossan-boukensha",
+        "id": "775",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1840318"
+        ]
+    },
+    "174070": {
+        "url": "https://subsplease.org/shows/tasuuketsu",
+        "id": "776",
+        "nyaasi_links": null
     }
 }
