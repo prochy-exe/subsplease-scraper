@@ -14307,7 +14307,8 @@
         "url": "https://subsplease.org/shows/maougun-saikyou-no-majutsushi-wa-ningen-datta",
         "id": "773",
         "nyaasi_links": [
-            "https://nyaa.si/view/1838356"
+            "https://nyaa.si/view/1838356",
+            "https://nyaa.si/view/1840724"
         ]
     },
     "175450": {
@@ -14328,5 +14329,12 @@
         "url": "https://subsplease.org/shows/tasuuketsu",
         "id": "776",
         "nyaasi_links": null
+    },
+    "162804": {
+        "url": "https://subsplease.org/shows/tokidoki-bosotto-russia-go-de-dereru-tonari-no-alya-san",
+        "id": "777",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1840768"
+        ]
     }
 }
