@@ -1,6 +1,7 @@
 import requests, copy, re, json, os
 from bs4 import BeautifulSoup
 
+missing_ids = []
 def get_all_anime():
 
     # URL of the webpage
@@ -52,6 +53,8 @@ def subs_to_ani(subs_entry, reverse = False):
         if manually_adjusted_strings and anime_key in manually_adjusted_strings:
             checked_id = manually_adjusted_strings[anime_key]
         else:
+            missing_ids.append(anime_key)
+            return None
             checked_id = get_input(f'Type in AniList ID of the anime(SubsPlease match: {anime_key}): ', False, str)
             checked_id = checked_id if checked_id else None
             manually_adjusted_strings[anime_key] = checked_id if checked_id else None
@@ -87,7 +90,10 @@ def get_ani_id_from_subs_title(subs_entry, title, reverse = False):
         anime_dict =  manually_adjusted_strings
     else:
         anime_dict = subs_to_ani(subs_entry, True)
-    anime_id = anime_dict[title]
+    try:
+        anime_id = anime_dict[title]
+    except:
+        return None
     if anime_id:
       save_json(conv_dict_path, {anime_id: title}, False)
     return anime_id
@@ -574,3 +580,5 @@ if __name__ == "__main__":
   updated_list = update_list(cache)
   updated_entries = update_entries(updated_list)
   save_cache(updated_entries)
+  for missing_entry in missing_ids:
+    print(missing_entry)
