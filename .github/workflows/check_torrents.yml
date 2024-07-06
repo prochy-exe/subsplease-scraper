@@ -31,8 +31,8 @@ jobs:
     - name: Restore Python Cache
       id: python-restore
       uses: actions/cache/restore@v3
-      fail-on-cache-miss: true
       with:
+        fail-on-cache-miss: true
         path: /opt/hostedtoolcache/Python/${{ steps.python_version.outputs.full_version }}/x64/lib/python${{ steps.python_version.outputs.major_version }}/site-packages
         key: ${{ env.python-cache }}
     - name: Install dependencies
