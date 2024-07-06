@@ -98,6 +98,33 @@ def get_ani_id_from_subs_title(subs_entry, title, reverse = False):
       save_json(conv_dict_path, {anime_id: title}, False)
     return anime_id
 
+def is_releasing(anime_id):
+    from alfetcher import get_anime_info
+    while anime_id:
+        anime_info = get_anime_info(anime_id)[anime_id]
+        anime_state = find_key(anime_info, 'status')
+        related_anime = find_key(anime_info, 'related')
+        status = False
+        if anime_state == 'RELEASING':
+            status = True
+            break
+        else:
+            if related_anime:
+                anime_id = None
+                for relation in related_anime:
+                    if related_anime[relation]['type'] == 'SEQUEL':
+                        anime_id = relation
+                        if related_anime[relation]['status'] == 'RELEASING':
+                            status = True
+                            break
+                        elif related_anime[relation]['status'] == 'NOT_YET_RELEASED':
+                            if 'release_date' in related_anime[relation]:
+                                status = True
+                            break
+            else:
+                break
+    return status
+
 def create_season_keys(subs_entry):
     from alfetcher import get_anime_info
     current_cache = load_cache()
@@ -113,6 +140,8 @@ def create_season_keys(subs_entry):
         subs_list_new[ani_key] = subs_entry[key]
         if not test_int:
             del subs_list_new[key]
+        if not is_releasing(ani_key):
+            return None
         hasSeason = True
         checked_episodes = 0
         skipped_episodes = 0
@@ -121,6 +150,8 @@ def create_season_keys(subs_entry):
             anime_id = ani_key
             anime_info = get_anime_info(anime_id)[anime_id]
             anime_relations = find_key(anime_info, 'related')
+            previous_episodes = 0
+            hasSeason = False
             if not anime_relations:
                 break
             for relation in anime_relations:
@@ -132,8 +163,6 @@ def create_season_keys(subs_entry):
                     elif anime_relations[relation]['type'] == 'PREQUEL' and relation in current_cache:
                         previous_episodes = len(current_cache[relation]['nyaasi_links'])
                         break
-                    else:
-                        hasSeason = False
             if anime_relations:
                 try:
                     season_id = str(anime_relation)
@@ -251,7 +280,7 @@ def update_list(subs_list):
         for link in all_shows_links:
             anime_title = link.a['title']
             item_url = base + link.a['href']
-            if anime_title not in skip_list and item_url not in list_urls:
+            if anime_title not in skip_list:
                 data = get_data(item_url)
                 anilist_data = create_season_keys(data)
                 if anilist_data: subs_list.update(anilist_data)
