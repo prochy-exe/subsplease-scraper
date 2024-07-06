@@ -434,8 +434,8 @@ def update_entries(subs_entry):
                 last_url = modified_entry[key]['nyaasi_links'][-1]
             except:
                 print("DEBUG: Error occurred while accessing 'nyaasi_links'")
-                print(remote_entry)
-                exit(1)
+                print(modified_entry[key])
+                continue
             current_urls = copied_entries[key]['nyaasi_links']
             if last_url not in current_urls:
                 current_urls.append(last_url)
