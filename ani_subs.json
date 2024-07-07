@@ -1771,7 +1771,8 @@
             "https://nyaa.si/view/1829846",
             "https://nyaa.si/view/1833069",
             "https://nyaa.si/view/1835969",
-            "https://nyaa.si/view/1838735"
+            "https://nyaa.si/view/1838735",
+            "https://nyaa.si/view/1841276"
         ]
     },
     "101705": {
@@ -12771,7 +12772,8 @@
             "https://nyaa.si/view/1830957",
             "https://nyaa.si/view/1834080",
             "https://nyaa.si/view/1836940",
-            "https://nyaa.si/view/1839589"
+            "https://nyaa.si/view/1839589",
+            "https://nyaa.si/view/1842398"
         ]
     },
     "157765": {
@@ -14315,7 +14317,8 @@
         "url": "https://subsplease.org/shows/boku-no-tsuma-wa-kanjou-ga-nai",
         "id": "774",
         "nyaasi_links": [
-            "https://nyaa.si/view/1839389"
+            "https://nyaa.si/view/1839389",
+            "https://nyaa.si/view/1842172"
         ]
     },
     "163292": {
@@ -14328,13 +14331,114 @@
     "174070": {
         "url": "https://subsplease.org/shows/tasuuketsu",
         "id": "776",
-        "nyaasi_links": null
+        "nyaasi_links": [
+            "https://nyaa.si/view/1840561"
+        ]
     },
     "162804": {
         "url": "https://subsplease.org/shows/tokidoki-bosotto-russia-go-de-dereru-tonari-no-alya-san",
         "id": "777",
         "nyaasi_links": [
             "https://nyaa.si/view/1840768"
+        ]
+    },
+    "173388": {
+        "url": "https://subsplease.org/shows/elf-san-wa-yaserarenai",
+        "id": "795",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842161"
+        ]
+    },
+    "163623": {
+        "url": "https://subsplease.org/shows/giji-harem",
+        "id": "781",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841225"
+        ]
+    },
+    "152681": {
+        "url": "https://subsplease.org/shows/gimai-seikatsu",
+        "id": "783",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841062"
+        ]
+    },
+    "173694": {
+        "url": "https://subsplease.org/shows/hazurewaku",
+        "id": "779",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841284"
+        ]
+    },
+    "168623": {
+        "url": "https://subsplease.org/shows/madougushi-dahliya-wa-utsumukanai",
+        "id": "789",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842262"
+        ]
+    },
+    "172416": {
+        "url": "https://subsplease.org/shows/mob-kara-hajimaru-tansaku-eiyuutan",
+        "id": "793",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842096",
+            "https://nyaa.si/view/1842266"
+        ]
+    },
+    "173533": {
+        "url": "https://subsplease.org/shows/monogatari-series-off-monster-season",
+        "id": "794",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842271"
+        ]
+    },
+    "162896": {
+        "url": "https://subsplease.org/shows/nige-jouzu-no-wakagimi",
+        "id": "791",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842228"
+        ]
+    },
+    "170695": {
+        "url": "https://subsplease.org/shows/ore-wa-subete-wo-parry-suru",
+        "id": "784",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841143"
+        ]
+    },
+    "170998": {
+        "url": "https://subsplease.org/shows/ramen-akaneko",
+        "id": "780",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841195"
+        ]
+    },
+    "163133": {
+        "url": "https://subsplease.org/shows/senpai-wa-otokonoko",
+        "id": "778",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841324"
+        ]
+    },
+    "173295": {
+        "url": "https://subsplease.org/shows/shoushimin-series",
+        "id": "790",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842308"
+        ]
+    },
+    "166700": {
+        "url": "https://subsplease.org/shows/tasogare-out-focus",
+        "id": "782",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841149"
+        ]
+    },
+    "175868": {
+        "url": "https://subsplease.org/shows/tensui-no-sakuna-hime",
+        "id": "792",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842289"
         ]
     }
 }
