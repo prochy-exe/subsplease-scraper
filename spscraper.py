@@ -121,6 +121,8 @@ def create_season_keys(subs_entry):
             anime_id = ani_key
             anime_info = get_anime_info(anime_id)[anime_id]
             anime_relations = find_key(anime_info, 'related')
+            previous_episodes = 0
+            hasSeason = False
             if not anime_relations:
                 break
             for relation in anime_relations:
@@ -131,9 +133,7 @@ def create_season_keys(subs_entry):
                         break
                     elif anime_relations[relation]['type'] == 'PREQUEL' and relation in current_cache:
                         previous_episodes = len(current_cache[relation]['nyaasi_links'])
-                        break
-                    else:
-                        hasSeason = False
+                        break                        
             if anime_relations:
                 try:
                     season_id = str(anime_relation)
