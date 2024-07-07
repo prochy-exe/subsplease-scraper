@@ -7838,19 +7838,19 @@
         "url": "https://subsplease.org/shows/mushoku-tensei-s2",
         "id": "591",
         "nyaasi_links": [
-            "https://nyaa.si/view/1720990",
-            "https://nyaa.si/view/1800372",
-            "https://nyaa.si/view/1804067",
-            "https://nyaa.si/view/1807680",
-            "https://nyaa.si/view/1811314",
-            "https://nyaa.si/view/1814919",
-            "https://nyaa.si/view/1818228",
-            "https://nyaa.si/view/1824790",
-            "https://nyaa.si/view/1828080",
-            "https://nyaa.si/view/1831381",
-            "https://nyaa.si/view/1834447",
-            "https://nyaa.si/view/1837315",
-            "https://nyaa.si/view/1839880"
+            "https://nyaa.si/view/1688930",
+            "https://nyaa.si/view/1691207",
+            "https://nyaa.si/view/1693738",
+            "https://nyaa.si/view/1696363",
+            "https://nyaa.si/view/1698941",
+            "https://nyaa.si/view/1701650",
+            "https://nyaa.si/view/1704128",
+            "https://nyaa.si/view/1706506",
+            "https://nyaa.si/view/1709197",
+            "https://nyaa.si/view/1712456",
+            "https://nyaa.si/view/1715554",
+            "https://nyaa.si/view/1718258",
+            "https://nyaa.si/view/1720990"
         ]
     },
     "109745": {
@@ -9871,30 +9871,6 @@
         "url": "https://subsplease.org/shows/shadowverse-flame",
         "id": "330",
         "nyaasi_links": [
-            "https://nyaa.si/view/1624509",
-            "https://nyaa.si/view/1627392",
-            "https://nyaa.si/view/1630355",
-            "https://nyaa.si/view/1633278",
-            "https://nyaa.si/view/1636082",
-            "https://nyaa.si/view/1638805",
-            "https://nyaa.si/view/1641668",
-            "https://nyaa.si/view/1644643",
-            "https://nyaa.si/view/1647312",
-            "https://nyaa.si/view/1649937",
-            "https://nyaa.si/view/1652836",
-            "https://nyaa.si/view/1689333",
-            "https://nyaa.si/view/1690533",
-            "https://nyaa.si/view/1692951",
-            "https://nyaa.si/view/1695649",
-            "https://nyaa.si/view/1698218",
-            "https://nyaa.si/view/1700876",
-            "https://nyaa.si/view/1703456",
-            "https://nyaa.si/view/1705767",
-            "https://nyaa.si/view/1708473",
-            "https://nyaa.si/view/1711634",
-            "https://nyaa.si/view/1714593",
-            "https://nyaa.si/view/1717467",
-            "https://nyaa.si/view/1720336",
             "https://nyaa.si/view/1722844",
             "https://nyaa.si/view/1725612",
             "https://nyaa.si/view/1728841",
@@ -9920,7 +9896,8 @@
             "https://nyaa.si/view/1830450",
             "https://nyaa.si/view/1833616",
             "https://nyaa.si/view/1837331",
-            "https://nyaa.si/view/1839239"
+            "https://nyaa.si/view/1839239",
+            "https://nyaa.si/view/1841932"
         ]
     },
     "163136": {
@@ -12696,7 +12673,8 @@
             "https://nyaa.si/view/1830957",
             "https://nyaa.si/view/1834080",
             "https://nyaa.si/view/1836940",
-            "https://nyaa.si/view/1839589"
+            "https://nyaa.si/view/1839589",
+            "https://nyaa.si/view/1842398"
         ]
     },
     "157765": {
@@ -14302,7 +14280,9 @@
     "168623": {
         "url": "https://subsplease.org/shows/madougushi-dahliya-wa-utsumukanai",
         "id": "789",
-        "nyaasi_links": null
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842262"
+        ]
     },
     "130590": {
         "url": "https://subsplease.org/shows/maou-gakuin-no-futekigousha-s2",
@@ -14332,18 +14312,23 @@
         "url": "https://subsplease.org/shows/mob-kara-hajimaru-tansaku-eiyuutan",
         "id": "793",
         "nyaasi_links": [
-            "https://nyaa.si/view/1842096"
+            "https://nyaa.si/view/1842096",
+            "https://nyaa.si/view/1842266"
         ]
     },
     "173533": {
         "url": "https://subsplease.org/shows/monogatari-series-off-monster-season",
         "id": "794",
-        "nyaasi_links": null
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842271"
+        ]
     },
     "162896": {
         "url": "https://subsplease.org/shows/nige-jouzu-no-wakagimi",
         "id": "791",
-        "nyaasi_links": null
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842228"
+        ]
     },
     "170695": {
         "url": "https://subsplease.org/shows/ore-wa-subete-wo-parry-suru",
@@ -14453,6 +14438,53 @@
     "175868": {
         "url": "https://subsplease.org/shows/tensui-no-sakuna-hime",
         "id": "792",
-        "nyaasi_links": null
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842289"
+        ]
+    },
+    "173388": {
+        "url": "https://subsplease.org/shows/elf-san-wa-yaserarenai",
+        "id": "795",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842161"
+        ]
+    },
+    "null": {
+        "url": "https://subsplease.org/shows/mushoku-tensei-s2",
+        "id": "591",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1688930",
+            "https://nyaa.si/view/1691207",
+            "https://nyaa.si/view/1693738",
+            "https://nyaa.si/view/1696363",
+            "https://nyaa.si/view/1698941",
+            "https://nyaa.si/view/1701650",
+            "https://nyaa.si/view/1704128",
+            "https://nyaa.si/view/1706506",
+            "https://nyaa.si/view/1709197",
+            "https://nyaa.si/view/1712456",
+            "https://nyaa.si/view/1715554",
+            "https://nyaa.si/view/1718258",
+            "https://nyaa.si/view/1720990",
+            "https://nyaa.si/view/1800372",
+            "https://nyaa.si/view/1804067",
+            "https://nyaa.si/view/1807680",
+            "https://nyaa.si/view/1811314",
+            "https://nyaa.si/view/1814919",
+            "https://nyaa.si/view/1818228",
+            "https://nyaa.si/view/1824790",
+            "https://nyaa.si/view/1828080",
+            "https://nyaa.si/view/1831381",
+            "https://nyaa.si/view/1834447",
+            "https://nyaa.si/view/1837315",
+            "https://nyaa.si/view/1839880"
+        ]
+    },
+    "173295": {
+        "url": "https://subsplease.org/shows/shoushimin-series",
+        "id": "790",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842308"
+        ]
     }
 }
