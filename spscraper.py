@@ -253,8 +253,9 @@ def update_list(subs_list):
             item_url = base + link.a['href']
             if anime_title not in skip_list and item_url not in list_urls:
                 data = get_data(item_url)
-                anilist_data = create_season_keys(data)
-                if anilist_data: subs_list.update(anilist_data)
+                if data:
+                    anilist_data = create_season_keys(data)
+                    if anilist_data: subs_list.update(anilist_data)
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
     return subs_list
@@ -314,8 +315,11 @@ def get_data(url):
         item[title]['id'] = sid_value
         torrent_link = get_torrent_link(item[title]['id'])
         item[title]['nyaasi_links'] = torrent_link
-        
-        return item
+
+        if not torrent_link:
+            return None
+        else:
+            return item
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
 
