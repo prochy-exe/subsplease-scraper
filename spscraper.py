@@ -441,8 +441,11 @@ def update_entries(subs_entry):
                 print(modified_entry[key])
                 continue
             current_urls = copied_entries[key]['nyaasi_links']
-            if last_url not in current_urls:
-                current_urls.append(last_url)
+            try:
+                if last_url not in current_urls:
+                    current_urls.append(last_url)
+            except:
+                current_urls = [last_url]
             filtered_urls = filter_404_links(current_urls)
             if filtered_urls == 'reset':
                 filtered_urls = modified_entry[key]['nyaasi_links']
