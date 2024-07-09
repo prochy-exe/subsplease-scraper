@@ -13681,7 +13681,8 @@
             "https://nyaa.si/view/1831998",
             "https://nyaa.si/view/1834989",
             "https://nyaa.si/view/1837671",
-            "https://nyaa.si/view/1840230"
+            "https://nyaa.si/view/1840230",
+            "https://nyaa.si/view/1843251"
         ]
     },
     "155890": {
@@ -14325,7 +14326,8 @@
         "url": "https://subsplease.org/shows/shinmai-ossan-boukensha",
         "id": "775",
         "nyaasi_links": [
-            "https://nyaa.si/view/1840318"
+            "https://nyaa.si/view/1840318",
+            "https://nyaa.si/view/1843229"
         ]
     },
     "174070": {
@@ -14482,6 +14484,13 @@
         "id": "797",
         "nyaasi_links": [
             "https://nyaa.si/view/1842785"
+        ]
+    },
+    "174044": {
+        "url": "https://subsplease.org/shows/mayonaka-punch",
+        "id": "803",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1843121"
         ]
     }
 }
