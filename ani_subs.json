@@ -14334,7 +14334,8 @@
         "url": "https://subsplease.org/shows/tasuuketsu",
         "id": "776",
         "nyaasi_links": [
-            "https://nyaa.si/view/1840561"
+            "https://nyaa.si/view/1840561",
+            "https://nyaa.si/view/1843528"
         ]
     },
     "162804": {
@@ -14491,6 +14492,20 @@
         "id": "803",
         "nyaasi_links": [
             "https://nyaa.si/view/1843121"
+        ]
+    },
+    "152137": {
+        "url": "https://subsplease.org/shows/isekai-shikkaku",
+        "id": "804",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1843409"
+        ]
+    },
+    "170938": {
+        "url": "https://subsplease.org/shows/katsute-mahou-shoujo-to-aku-wa-tekitai-shiteita",
+        "id": "805",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1843400"
         ]
     }
 }
