@@ -14567,5 +14567,44 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1845137"
         ]
+    },
+    "165681": {
+        "url": "https://subsplease.org/shows/cardfight-vanguard-divinez-s2",
+        "id": "787",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841890",
+            "https://nyaa.si/view/1845159"
+        ]
+    },
+    "168345": {
+        "url": "https://subsplease.org/shows/dungeon-no-naka-no-hito",
+        "id": "785",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841770",
+            "https://nyaa.si/view/1844672"
+        ]
+    },
+    "139825": {
+        "url": "https://subsplease.org/shows/kimi-to-boku-no-saigo-no-senjou-arui-wa-sekai-ga-hajimaru-seisen-s2",
+        "id": "807",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1843766"
+        ]
+    },
+    "163077": {
+        "url": "https://subsplease.org/shows/kono-sekai-wa-fukanzen-sugiru",
+        "id": "788",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1841812",
+            "https://nyaa.si/view/1844705"
+        ]
+    },
+    "175977": {
+        "url": "https://subsplease.org/shows/shikanoko-nokonoko-koshitantan",
+        "id": "799",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1842716",
+            "https://nyaa.si/view/1845662"
+        ]
     }
 }
