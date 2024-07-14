@@ -1,7 +1,63 @@
 name: Update SubsPlease database
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '5 14 * * 1' # Mayonaka Punch
+    - cron: '5 16 * * 1' # SHY
+    - cron: '35 17 * * 1' # Shinmai Ossan Boukensha
+    - cron: '5 18 * * 1' # Spice and Wolf (2024)
+    - cron: '50 14 * * 2' # Katsute Mahou Shoujo to Aku wa Tekitai shiteita
+    - cron: '5 15 * * 2' # Isekai Shikkaku
+    - cron: '5 19 * * 2' # Tasuuketsu
+    - cron: '5 14 * * 3' # Maougun Saikyou no Majutsushi wa Ningen datta
+    - cron: '35 14 * * 3' # Kimi to Boku no Saigo no Senjou, Arui wa Sekai ga Hajimaru Seisen S2
+    - cron: '5 15 * * 3' # Oshi no Ko
+    - cron: '5 15 * * 3' # Tokidoki Bosotto Russia-go de Dereru Tonari no Alya-san
+    - cron: '20 15 * * 3' # Koi wa Futago de Warikirenai
+    - cron: '35 15 * * 3' # Sengoku Youko
+    - cron: '35 16 * * 3' # Maou Gakuin no Futekigousha S2
+    - cron: '35 12 * * 4' # Gimai Seikatsu
+    - cron: '5 13 * * 4' # Megaton-kyuu Musashi
+    - cron: '5 15 * * 4' # Ore wa Subete wo Parry suru
+    - cron: '5 15 * * 4' # Tasogare Out Focus
+    - cron: '5 16 * * 4' # Ramen Akaneko
+    - cron: '35 16 * * 4' # Giji Harem
+    - cron: '35 17 * * 4' # Megami no Cafe Terrace
+    - cron: '0 17 * * 4' # Chiikawa
+    - cron: '5 18 * * 4' # Hazurewaku
+    - cron: '35 18 * * 4' # Senpai wa Otokonoko
+    - cron: '5 3 * * 5' # Dead Dead Demons Dededede Destruction
+    - cron: '35 13 * * 5' # 2.5-jigen no Ririsa
+    - cron: '5 15 * * 5' # Bye Bye, Earth
+    - cron: '35 15 * * 5' # Tensei Shitara Slime Datta Ken
+    - cron: '5 16 * * 5' # NieR Automata Ver1.1a
+    - cron: '35 17 * * 5' # Dungeon no Naka no Hito
+    - cron: '35 18 * * 5' # Kono Sekai wa Fukanzen Sugiru
+    - cron: '45 23 * * 5' # Cardfight!! Vanguard - Divinez S2
+    - cron: '35 2 * * 6' # Shadowverse Flame
+    - cron: '35 9 * * 6' # Boku no Hero Academia
+    - cron: '35 11 * * 6' # Detective Conan
+    - cron: '35 12 * * 6' # Madougushi Dahliya wa Utsumukanai
+    - cron: '5 14 * * 6' # Mob kara Hajimaru Tansaku Eiyuutan
+    - cron: '35 14 * * 6' # Monogatari Series - Off & Monster Season
+    - cron: '5 15 * * 6' # Boku no Tsuma wa Kanjou ga Nai
+    - cron: '5 15 * * 6' # Elf-san wa Yaserarenai
+    - cron: '20 15 * * 6' # Naze Boku no Sekai wo Daremo Oboeteinai no ka
+    - cron: '35 15 * * 6' # Tensui no Sakuna-hime
+    - cron: '5 16 * * 6' # Nige Jouzu no Wakagimi
+    - cron: '35 16 * * 6' # Atri - My Dear Moments
+    - cron: '5 17 * * 6' # Make Heroine ga Oosugiru!
+    - cron: '5 18 * * 6' # Shoushimin Series
+    - cron: '35 18 * * 6' # Karasu wa Aruji wo Erabanai
+    - cron: '35 1 * * 0' # Wonderful Precure!
+    - cron: '5 2 * * 0' # One Piece
+    - cron: '5 9 * * 0' # Fairy Tail - 100 Years Quest
+    - cron: '35 9 * * 0' # Tsue to Tsurugi no Wistoria
+    - cron: '5 14 * * 0' # Tower of God S2
+    - cron: '5 15 * * 0' # Shikanoko Nokonoko Koshitantan
+    - cron: '35 15 * * 0' # VTuber Nandaga Haishin Kiri Wasuretara Densetsu ni Natteta
+    - cron: '35 16 * * 0' # Na Nare Hana Nare
+    - cron: '35 17 * * 0' # Isekai Yururi Kikou
+    - cron: '50 19 * * 0' # Yami Shibai 13
   workflow_dispatch:
 
 permissions:
