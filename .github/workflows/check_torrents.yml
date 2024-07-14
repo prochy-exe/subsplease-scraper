@@ -1,6 +1,9 @@
 name: Check torrents
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ['Update SubsPlease database']
+    types: [completed]
 
 permissions:
   contents: write

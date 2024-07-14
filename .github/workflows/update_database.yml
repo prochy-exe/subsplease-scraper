@@ -126,9 +126,6 @@ jobs:
     - name: Push to GitHub
       continue-on-error: true
       run: git push
-    - name: Check torrent links
-      continue-on-error: true
-      run: python torrent_verification.py
     - name: Delete Previous Cache
       if: ${{ steps.anilist-restore.outputs.cache-hit }}
       continue-on-error: true
