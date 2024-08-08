@@ -14408,7 +14408,8 @@
             "https://nyaa.si/view/1844071",
             "https://nyaa.si/view/1847148",
             "https://nyaa.si/view/1850256",
-            "https://nyaa.si/view/1853570"
+            "https://nyaa.si/view/1853570",
+            "https://nyaa.si/view/1856763"
         ]
     },
     "173694": {
@@ -14719,6 +14720,20 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1842716",
             "https://nyaa.si/view/1845662"
+        ]
+    },
+    "167991": {
+        "url": "https://subsplease.org/shows/delicos-nursery",
+        "id": "814",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1856577"
+        ]
+    },
+    "152184": {
+        "url": "https://subsplease.org/shows/true-beauty",
+        "id": "813",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1856574"
         ]
     }
 }
