@@ -1,7 +1,11 @@
-import requests, copy, re, json, os
+import requests, copy, re, json, os, alfetcher
 from bs4 import BeautifulSoup
+from difflib import SequenceMatcher
 
 missing_ids = []
+entries_not_zero = []
+yanked_entries = []
+
 def get_all_anime():
 
     # URL of the webpage
@@ -26,12 +30,10 @@ def get_all_anime():
         for link in all_shows_links:
             anime_title = link.a['title']
             listing_url = base + link.a['href']
-            matched_url = False
-            if anime_title not in skip_list:
-                if anime_title == 'Boku no Hero Academia':#the fandom isn't the only thing that requires special attention ig
-                    anime_info = subspleaseinfo_bh(anime_title)
-                else:    
-                    anime_info = get_data(listing_url)
+            if anime_title not in skip_list: 
+                anime_info = get_data(listing_url)
+                if not anime_info:
+                    continue
                 # Set the proper dictionary entry
                 try:
                     dict_entry = anime_info[anime_title]
@@ -43,60 +45,6 @@ def get_all_anime():
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
     return items_dict
-
-def subs_to_ani(subs_entry, reverse = False):
-    from alfetcher import get_id, get_anime_info
-    
-    def check_manual_adjust(anime_key, manually_adjusted_strings):
-        if not manually_adjusted_strings:
-            manually_adjusted_strings = {}
-        if manually_adjusted_strings and anime_key in manually_adjusted_strings:
-            checked_id = manually_adjusted_strings[anime_key]
-        else:
-            missing_ids.append(anime_key)
-            return None
-            checked_id = get_input(f'Type in AniList ID of the anime(SubsPlease match: {anime_key}): ', False, str)
-            checked_id = checked_id if checked_id else None
-            manually_adjusted_strings[anime_key] = checked_id if checked_id else None
-        if manually_adjusted_strings:
-            save_json(manual_adjustments_path, manually_adjusted_strings, True)
-        return checked_id
-
-    manually_adjusted_strings = read_json(manual_adjustments_path)
-    new_list = {}
-    for key in subs_entry:
-        pattern = re.compile(r's(\d)', re.I)
-        title = re.sub(pattern, f'Season \\1', key)
-        anime_id = get_id(title)
-        if not anime_id:
-            anime_id = check_manual_adjust(key, manually_adjusted_strings)
-            if not anime_id: continue
-        else:
-            anime_id = str(anime_id)
-            info = get_anime_info(anime_id)[anime_id]
-            anime_state = find_key(info, 'status')
-            if anime_state == 'NOT_YET_RELEASED':
-                anime_id = check_manual_adjust(key, manually_adjusted_strings)
-        # Add the value with the new key
-        new_list[anime_id] = key
-    if reverse:
-        return {subs_value:anilist_key for anilist_key, subs_value in new_list.items()} #Returns Subsplease title: AniList ID
-    else:
-        return new_list #Returns AniList ID: Subsplease title
-
-def get_ani_id_from_subs_title(subs_entry, title, reverse = False):
-    manually_adjusted_strings = read_json(manual_adjustments_path)
-    if manually_adjusted_strings and title in manually_adjusted_strings:
-        anime_dict =  manually_adjusted_strings
-    else:
-        anime_dict = subs_to_ani(subs_entry, True)
-    try:
-        anime_id = anime_dict[title]
-    except:
-        return None
-    if anime_id:
-      save_json(conv_dict_path, {anime_id: title}, False)
-    return anime_id
 
 def is_releasing(anime_id):
     from alfetcher import get_anime_info
@@ -125,199 +73,6 @@ def is_releasing(anime_id):
                 break
     return status
 
-def create_season_keys(subs_entry):
-    from alfetcher import get_anime_info
-    current_cache = load_cache()
-    subs_list_new = copy.deepcopy(subs_entry)
-    test_int = None
-    for key in subs_entry:
-        try:
-            test_int = int(key)
-            ani_key = key
-        except ValueError:
-            ani_key = get_ani_id_from_subs_title({key: subs_entry[key]}, key)
-            if not ani_key: return None
-        subs_list_new[ani_key] = subs_entry[key]
-        if not test_int:
-            del subs_list_new[key]
-        if not is_releasing(ani_key):
-            return None
-        hasSeason = True
-        checked_episodes = 0
-        skipped_episodes = 0
-        cleared_ids = []
-        while hasSeason:
-            anime_id = ani_key
-            anime_info = get_anime_info(anime_id)[anime_id]
-            anime_relations = find_key(anime_info, 'related')
-            previous_episodes = 0
-            hasSeason = False
-            if not anime_relations:
-                break
-            for relation in anime_relations:
-                if relation not in cleared_ids:
-                    if anime_relations[relation]['status'] != 'NOT_YET_RELEASED' and anime_relations[relation]['type'] == 'SEQUEL':
-                        anime_relation = relation
-                        hasSeason = True
-                        break
-                    elif anime_relations[relation]['type'] == 'PREQUEL' and relation in current_cache:
-                        previous_episodes = len(current_cache[relation]['nyaasi_links'])
-                        break
-            if anime_relations:
-                try:
-                    season_id = str(anime_relation)
-                except:
-                    season_id = None
-                if season_id is not None and season_id in subs_list_new and checked_episodes == 0:
-                    break     
-                sub_id = subs_entry[key]['id']
-                url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
-                headers = {'Content-Type': 'application/json'}
-                response = requests.get(url, headers=headers)
-                if response.status_code == 200:
-                    json_response = response.json()['episode']
-                    json_data = {}
-                    if not json_response:
-                        break
-                    # Iterate over the reversed items and populate the new dictionary
-                    for reverse_key, value in reversed(json_response.items()):
-                        json_data[reverse_key] = value
-                first_key = next(iter(json_data.keys()))
-                episode_string = json_data[first_key]['episode']
-                try:
-                    starting_episode = int(episode_string)
-                except:
-                    if (re.search(r"movie", episode_string, re.I) or
-                        re.search(r"v\d", episode_string, re.I) or #i really dont know what to do about this, just save me
-                        re.search(r"movie", json_data[first_key]['show'], re.I)):
-                        starting_episode = 1                        
-                    else:
-                        break
-                links = subs_entry[key]['nyaasi_links']
-                link_amount = len(subs_entry[key]['nyaasi_links'])
-                episode_amount = find_key(anime_info, 'total_eps')
-                if not episode_amount:
-                    sorted_magnets = []
-                    if link_amount - previous_episodes < 1: previous_episodes = 0
-                    for x in range(previous_episodes, link_amount):
-                        try:
-                            sorted_magnets.append(links[x])
-                            x += 1
-                        except:
-                            break
-                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
-                    break
-                if link_amount > episode_amount:
-                    checked_episodes += previous_episodes
-                if starting_episode > episode_amount + skipped_episodes:
-                    skipped_episodes += episode_amount
-                    if ani_key not in cleared_ids:
-                        try:
-                            del subs_list_new[ani_key]
-                            cleared_ids.append(ani_key)
-                        except:
-                           cleared_ids.append(ani_key) 
-                    ani_key = season_id
-                    save_json(conv_dict_path, {ani_key: key}, False)
-                    continue
-                sorted_magnets = []
-                for x in range(0, episode_amount):
-                    try:
-                        sorted_magnets.append(links[x + checked_episodes])
-                        x += 1
-                    except:
-                        break
-                if starting_episode == 0:
-                    x = x + 1
-                checked_episodes += x
-                leftover_episodes = link_amount - checked_episodes
-                if leftover_episodes  > 0 and episode_amount > 1:
-                    subs_list_new[season_id] = copy.deepcopy(subs_entry[key])
-                    leftover_magnets = []
-                    for y in range(checked_episodes, link_amount):
-                        leftover_magnets.append(links[y])
-                elif leftover_episodes  > 0:
-                    subs_list_new[season_id] = copy.deepcopy(subs_entry[key])
-                    leftover_magnets = []
-                    leftover_magnets.append(links[checked_episodes])
-                try:
-                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
-                except:
-                    subs_list_new[ani_key] = copy.deepcopy(subs_entry[key])
-                    subs_list_new[ani_key]['nyaasi_links'] = sorted_magnets
-                cleared_ids.append(ani_key)
-                if season_id is not None:
-                    try:
-                        subs_list_new[season_id]['nyaasi_links'] = leftover_magnets
-                    except:
-                        hasSeason = False
-                else:
-                    break
-            ani_key = season_id
-            save_json(conv_dict_path, {ani_key: key}, False)
-    return subs_list_new
-                
-    
-def update_list(subs_list):
-    # URL of the webpage
-    url = "https://subsplease.org/shows"
-    base = "https://subsplease.org"
-    # Send a GET request to the URL
-    response = requests.get(url)
-    list_urls = [entry['url'] for entry in subs_list.values()]
-    not_found = []
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the HTML content
-        html_content = response.text
-        
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(html_content, 'html.parser')
-        
-        # Find all elements with class 'all-shows-link' and get their 'title' attribute
-        all_shows_links = soup.find_all(class_='all-shows-link')
-
-        for link in all_shows_links:
-            anime_title = link.a['title']
-            item_url = base + link.a['href']
-            if anime_title not in skip_list:
-                data = get_data(item_url)
-                anilist_data = create_season_keys(data)
-                if anilist_data: subs_list.update(anilist_data)
-    else:
-        print("Failed to retrieve webpage. Status code:", response.status_code)
-    return subs_list
-
-def gen_cache():
-    cleaned_list = load_cache()
-    final_cache = create_season_keys(cleaned_list)
-    save_cache(final_cache)
-
-def subspleaseinfo_bh(search_string):
-    url = "https://subsplease.org/shows"
-    url_request = f'https://subsplease.org/api/?f=search&tz=Europe/Prague&s={search_string}'
-    headers = {'Content-Type': 'application/json'}
-    response = requests.get(url_request, headers=headers)
-    if response.status_code == 200:
-        json_data = response.json()
-    items_dict = {}
-    items_dict[search_string] = {}
-    items_dict[search_string]['url'] = url + '/' + json_data[next(iter(json_data.keys()))]['page']
-    items_dict[search_string]['id'] = get_subsplease_id(items_dict[search_string]['url'])
-    torrent_link = get_torrent_link_bh(items_dict[search_string]['id'])[0]
-    skip_list = get_torrent_link_bh(items_dict[search_string]['id'])[1]
-    items_dict[search_string]['nyaasi_links'] = torrent_link
-    
-    for skip in skip_list:
-        items_dict[skip] = {}
-        items_dict[skip]['url'] = url + '/' + json_data[next(iter(json_data.keys()))]['page']
-        items_dict[skip]['id'] = get_subsplease_id(items_dict[search_string]['url'])
-        torrent_link = skip_list[skip]
-        items_dict[skip]['nyaasi_links'] = torrent_link
-
-    return items_dict
-    #save_cache(items_dict) 
-
 def get_data(url):
     # Send a GET request to the URL
     response = requests.get(url)
@@ -342,175 +97,91 @@ def get_data(url):
         item[title]['url'] = url
         item[title]['id'] = sid_value
         torrent_link = get_torrent_link(item[title]['id'])
-        item[title]['nyaasi_links'] = torrent_link
+        item[title]['episodes'] = torrent_link[0]
+        item[title]['batch'] = torrent_link[1]
         
         return item
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
 
 def get_torrent_link(sub_id):
-    url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
-    headers = {'Content-Type': 'application/json'}
-    response = requests.get(url, headers=headers)
-    if response.status_code == 200:
-        json_data = response.json()
-        torrent_links = []
-        if json_data['episode']:
-            for episode in json_data['episode']:
-                if '.5' not in episode:
-                    for download in json_data['episode'][episode]['downloads']:
-                        if download['res'] == '1080':
-                            raw_url = download['torrent']
-                            if raw_url.endswith("/torrent"):
-                                raw_url = raw_url[:-len("/torrent")]
-                            torrent_links.insert(0, raw_url)  
-        elif json_data['batch']:
-            for batch in json_data['batch']:
-                for download in json_data['batch'][batch]['downloads']:
-                    if download['res'] == '1080':
-                        raw_url = download['torrent']
-                        if raw_url.endswith("/torrent"):
-                            raw_url = raw_url[:-len("/torrent")]
-                        torrent_links.insert(0, raw_url)
-        else:
-            torrent_links = None
-        return torrent_links
 
-def get_torrent_link_bh(sub_id):
-    url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
-    headers = {'Content-Type': 'application/json'}
-    response = requests.get(url, headers=headers)
-    skipped_eps = {}
-    ona = []
-    if response.status_code == 200:
-        json_data = response.json()
-        torrent_links = []
-        try:
-            for episode in json_data['episode']:
-                for download in json_data['episode'][episode]['downloads']:
-                    if download['res'] == '1080':
-                        raw_url = download['torrent']
-                        if raw_url.endswith("/torrent"):
-                            raw_url = raw_url[:-len("/torrent")]
-                        if not re.search(r"\d", episode, re.I):
-                            if episode == 'Boku no Hero Academia - UA Heroes Battle':
-                                skipped_eps[episode] = raw_url
-                                break
-                            else:
-                                ona.insert(0, raw_url)
-                                if episode == 'Boku no Hero Academia - Hero League Baseball':
-                                    skipped_eps[episode] = ona
-                                break
-                        else:
-                            torrent_links.insert(0, raw_url)
-                        break
-        except KeyError:
-            for batch in json_data['batch']:
-                for download in json_data['batch'][batch]['downloads']:
-                    if download['res'] == '1080':
-                        raw_url = download['torrent']
-                        if raw_url.endswith("/torrent"):
-                            raw_url = raw_url[:-len("/torrent")]
-                        torrent_links.insert(0, raw_url)
-        return torrent_links, skipped_eps
-
-def get_subsplease_id(url):
-    # URL of the webpage
-
-    # Send a GET request to the URL
-    response = requests.get(url)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        # Parse the HTML content
-        html_content = response.text
-        
-        # Create a BeautifulSoup object
-        soup = BeautifulSoup(html_content, 'html.parser')
-        
-        # Find all elements with class 'all-shows-link' and get their 'title' attribute
-        table_element  = soup.find('table', id='show-release-table')
-
-        sid_value = table_element.get('sid')
-        return sid_value
-    else:
-        print("Failed to retrieve webpage. Status code:", response.status_code)
- 
-def update_entries(subs_entry):
-    from alfetcher import get_anime_info
-    
-    def filter_404_links(links):
-        for link in links:
-            response = requests.head(link)
-            if response.status_code == 404:
-                return 'reset'
-    
-    copied_entries = copy.deepcopy(subs_entry)
-    checked_keys = []
-    missing_keys = []
-    for key in subs_entry:
-        anime_status = find_key(get_anime_info(key), 'status')
-        try:
-            remote_key = read_json(conv_dict_path)[key]
-        except:
-            missing_keys.append(key)
-            continue
-        if anime_status == 'RELEASING' and remote_key not in checked_keys:
-            entry_url = subs_entry[key]['url']
-            remote_entry = get_data(entry_url)
-            modified_entry = create_season_keys({key: remote_entry[remote_key]})
-            try:
-                last_url = modified_entry[key]['nyaasi_links'][-1]
-            except:
-                print("DEBUG: Error occurred while accessing 'nyaasi_links'")
-                print(modified_entry[key])
-                continue
-            current_urls = copied_entries[key]['nyaasi_links']
-            if last_url not in current_urls:
-                current_urls.append(last_url)
-            filtered_urls = filter_404_links(current_urls)
-            if filtered_urls == 'reset':
-                filtered_urls = modified_entry[key]['nyaasi_links']
+    def get_magnets(torrent_dict):
+        def get_hq_int(downloads):
+            for x in range(len(downloads)):
+                sd = None
+                hd = None
+                fhd = None
+                if downloads[x]['res'] == '480':
+                    sd = x
+                elif downloads[x]['res'] == '720':
+                    hd = x
+                elif downloads[x]['res'] == '1080':
+                    fhd = x
+            if fhd:
+                return fhd
+            elif hd:
+                return hd
             else:
-                filtered_urls = current_urls
-            copied_entries[key]['nyaasi_links'] = filtered_urls
-    return copied_entries
+                return sd
+        cleaned_dict = {}
+        for key in torrent_dict:
+            try: #try to match the episode number
+                adjusted_key = re.search(r".* - (\d\d.*)", key).group(1)
+            except: #if not found let's use whatever we have
+                adjusted_key = re.search(r".* - (.*)", key).group(1)
+            if re.search(r"\d{2,}\.\d+", adjusted_key): #skip recap episodes
+                continue
+            if re.search(r"v\d+", adjusted_key): #remove version numbers from the number of the ep
+                adjusted_key = re.sub(r"v\d+", "", adjusted_key)
+            cleaned_dict.update({adjusted_key: torrent_dict[key]['downloads'][get_hq_int(torrent_dict[key]['downloads'])]['magnet']})
+        return {k: cleaned_dict[k] for k in sorted(cleaned_dict, key=lambda x: list(cleaned_dict.keys()).index(x), reverse=True)}
+    
+    url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
+    headers = {'Content-Type': 'application/json'}
+    response = requests.get(url, headers=headers)
+    torrent_links = {}
+    batch_state = False
+    if response.status_code == 200:
+        json_data = response.json()
+        if json_data['batch']:
+            torrent_links.update(get_magnets(json_data['batch']))
+            batch_state = True
+        elif json_data['episode']:
+            torrent_links.update(get_magnets(json_data['episode']))
+    return torrent_links, batch_state
     
 #Utils
 
 def read_json(file_path):
-  if os.path.exists(file_path):
-    with open(file_path, "r", encoding="utf-8") as json_file:
-      data = json.load(json_file)
-    if data == {}:
-      return None
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+        if data == {}:
+            return None
+        else:
+            return data
     else:
-      return data
-  else:
-    return None
+        return None
 
 def save_json(file_path, data, overwrite = True):
-  def update_json():
-    json_copy = read_json(file_path)
-    if json_copy is None:
-      json_copy = {}
-    json_copy.update(data)
-    with open(file_path, "w", encoding="utf-8") as file:
-      json.dump(json_copy, file, indent=4, ensure_ascii=False)
+    def update_json():
+        json_copy = read_json(file_path)
+        if json_copy is None:
+            json_copy = {}
+            json_copy.update(data)
+            with open(file_path, "w", encoding="utf-8") as file:
+                json.dump(json_copy, file, indent=4, ensure_ascii=False)
 
-  json_file = read_json(file_path)
-  if json_file != None:
-      if overwrite:
-        with open(file_path, "w", encoding="utf-8") as file:
-          json.dump(data, file, indent=4, ensure_ascii=False)
-      else:
-        update_json()
-  else:
-    update_json()     
-    
-def yank_anime_entry(name):
-    ani_list = load_cache()
-    return {name: ani_list[name]}
+    json_file = read_json(file_path)
+    if json_file != None:
+        if overwrite:
+            with open(file_path, "w", encoding="utf-8") as file:
+                json.dump(data, file, indent=4, ensure_ascii=False)
+        else:
+            update_json()
+    else:
+        update_json()     
 
 def save_cache(data):
     save_json(cache_path, data, True)
@@ -520,21 +191,21 @@ def load_cache():
     return cache
 
 def find_key(data, key_type):
-  key_type = key_type.lower()
-  if isinstance(data, dict):
-      if key_type in data:
-          return data[key_type]
-      else:
-          for value in data.values():
-              result = find_key(value, key_type)
-              if result is not None:
-                  return result
-  elif isinstance(data, list):
-      for item in data:
-          result = find_key(item, key_type)
-          if result is not None:
-              return result
-  return None
+    key_type = key_type.lower()
+    if isinstance(data, dict):
+        if key_type in data:
+            return data[key_type]
+        else:
+            for value in data.values():
+                result = find_key(value, key_type)
+                if result is not None:
+                    return result
+    elif isinstance(data, list):
+        for item in data:
+            result = find_key(item, key_type)
+            if result is not None:
+                return result
+    return None
 
 def get_input(prompt, lower = True, data_type = str):
     while True:
@@ -548,66 +219,214 @@ def get_input(prompt, lower = True, data_type = str):
         except ValueError:
             print("Invalid input. Please enter a valid", data_type.__name__)
 
-def check_cache():
-    from alfetcher import get_anime_info
-    attention = []
-    cache = load_cache()
-    for entry in cache:
-        anime_data = get_anime_info(entry)
-        anime_amount = find_key(anime_data, 'total_eps')
-        anime_status = find_key(anime_data, 'status')
-        links_amount = len(cache[entry]['nyaasi_links'])
-        if links_amount != anime_amount and anime_status != 'RELEASING':
-            attention.append([entry, 'https://anilist.co/anime/' + entry, str(links_amount)+'/'+str(anime_amount)])
-    for anime_id in attention:
-        print(anime_id)
-
-def generate_conv_keys():
-    cache = load_cache()
-    
-    def get_title(url):
-        # Send a GET request to the URL
-        response = requests.get(url)
-
-        # Check if the request was successful (status code 200)
-        if response.status_code == 200:
-            # Parse the HTML content
-            html_content = response.text
-            
-            # Create a BeautifulSoup object
-            soup = BeautifulSoup(html_content, 'html.parser')
-            
-            # Find all elements with class 'all-shows-link' and get their 'title' attribute
-            table_element  = soup.find('table', id='show-release-table')
-            title = soup.find('h1', class_='entry-title').text
-            title = re.sub('–', '-', title)
-            title = re.sub('’', "'", title)
-            
-            return title
+def subs_to_ani(anime_list):
+    al_list = {}
+    for anime in anime_list:
+        if anime in manual_adjustments:
+            al_list.update({manual_adjustments[anime]: anime_list[anime]})
         else:
-            print("Failed to retrieve webpage. Status code:", response.status_code)
+            search_string = re.sub(r"S(\d+)$", r"Season \1", anime)
+            al_id = alfetcher.get_id(search_string)
+            if al_id is None:
+                al_id = search_google_for_anilist_id(search_string)
+                if al_id is None:
+                    missing_ids.append(anime)
+            if al_id:        
+                al_list.update({al_id: anime_list[anime]})
+    return al_list
 
-    for key in cache:
-        save_json(conv_dict_path, {key: get_title(cache[key]['url'])}, False)
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
-conv_dict_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'conv_dict.json')
+def get_season_ranges(anime_id):
+    from alfetcher import get_anime_info
+    starting_id = anime_id
+    season_ranges = {}
+    season_ids = []
+    anime_info = get_anime_info(anime_id)[anime_id]
+    range_start = 1
+    try:
+        range_end = int(anime_info['total_eps'])
+    except:
+        range_end = 9999
+    while anime_id:
+        anime_info = get_anime_info(anime_id)[anime_id]
+        season_ranges[anime_id] = {'start': range_start, 'end': range_end, 'total_eps': anime_info['total_eps']}
+        related_anime = anime_info['related']
+        if related_anime:
+            anime_id = None
+            for relation in related_anime:
+                relation_info = get_anime_info(relation)[relation]
+                if relation_info['format'] == 'TV' or anime_info['format'] != 'TV':
+                    if related_anime[relation]['type'] == 'SEQUEL' and related_anime[relation]['status'] != 'NOT_YET_RELEASED':
+                        season_ids.append(relation)
+                        range_start = range_end + 1
+                        try:
+                            range_end = range_start + int(relation_info['total_eps'])
+                        except:
+                            range_end = 9999
+                        anime_id = relation
+            if anime_id == starting_id:
+                print("Fatal error")
+        else:
+            break
+    return season_ranges, season_ids
+
+def generate_seasons(subs_list):
+    subs_copy = copy.deepcopy(subs_list)
+    from alfetcher import get_anime_info
+    for ani_id in subs_list:
+        working_entry = copy.deepcopy(subs_copy[ani_id]['episodes'])
+        subs_copy[ani_id]['specials'] = {}
+        anime_data = get_anime_info(ani_id)[ani_id]
+        episode_count = anime_data['total_eps']
+        episode_count = 9999 if not episode_count else episode_count
+        start_ep_num = 1
+        seasons_info = get_season_ranges(ani_id)
+        season_ranges = seasons_info[0]
+        season_ids = seasons_info[1]
+        for ep in working_entry:
+            try:
+                if not int(ep) < 2:
+                    entries_not_zero.append(ani_id)
+                    start_ep_num = int(ep)
+            except:
+                pass
+            if ep == '00':
+                subs_copy[ani_id]['specials'].update({ep: working_entry[ep]})
+                working_entry.pop(ep)
+            break
+        modif_entries = copy.deepcopy(working_entry)
+        for ep in working_entry:
+            try:
+                int(ep)
+            except:
+                if not subs_copy[ani_id]['batch'] and episode_count > 1:
+                    subs_copy[ani_id]['specials'].update({ep: working_entry[ep]})
+                    modif_entries.pop(ep)
+        #remove empty dicts with no episodes
+        if not subs_copy[ani_id]['episodes'] and not subs_copy[ani_id]['specials']:
+            subs_copy.pop(ani_id)
+            continue
+        if subs_copy[ani_id]['specials'] and not subs_copy[ani_id]['episodes']:
+            subs_copy[ani_id]['episodes'] = subs_copy[ani_id]['specials']
+            subs_copy[ani_id]['specials'] = {}
+        working_entry = modif_entries
+        if not subs_copy[ani_id]['specials']:
+            subs_copy[ani_id].pop('specials')
+        subs_copy[ani_id]['episodes'] = working_entry
+        if start_ep_num != 1:
+            for season in season_ranges:
+                if season_ranges[season]['start'] <= start_ep_num and start_ep_num <= season_ranges[season]['end']:
+                    if season != ani_id:
+                        subs_copy[season] = subs_copy[ani_id]
+                        subs_copy.pop(ani_id)
+                        ani_id = season
+                        subs_copy[ani_id]['episodes'] = {}
+                        e = 1
+                        for ep in working_entry:
+                            if e <= season_ranges[season]['total_eps'] :
+                                en = str(e) if e > 9 else '0' + str(e)
+                                subs_copy[ani_id]['episodes'].update({en: working_entry[ep]})
+                                e += 1
+        if season_ids:
+            try:
+                range_start = season_ids.index(ani_id) + 1 if start_ep_num > 1 else 0
+            except:
+                range_start = 0
+            for x in range(range_start, len(season_ids)):
+                following_id = season_ids[x]
+                if not subs_copy[ani_id]['batch']:
+                    subs_eps = len(working_entry)
+                    if subs_eps > episode_count:
+                        following_entry = {}
+                        following_entry.update(subs_copy[ani_id])
+                        following_entry['episodes'] = {}
+                        if start_ep_num != 1:
+                            for y in range(season_ranges[following_id]['start'], season_ranges[following_id]['end'] + 1):
+                                if y - start_ep_num >= subs_eps:
+                                    break
+                                ep_num = str(y) if y > 9 else '0' + str(y)
+                                real_num = str(y - season_ranges[season_ids[x - 1]]['end'] ) if y - season_ranges[season_ids[x - 1]]['end'] > 9 else '0' + str(y - season_ranges[season_ids[x - 1]]['end'] )
+                                following_entry['episodes'].update({real_num: working_entry[ep_num]})
+                        else:
+                            last_matched_ep = 0
+                            for y in range(episode_count + last_matched_ep + 1, subs_eps + 1):
+                                ep_num = str(y) if y > 9 else '0' + str(y)
+                                real_num = str(y - episode_count) if y - episode_count > 9 else '0' + str(y - episode_count)
+                                following_entry['episodes'].update({real_num: working_entry[ep_num]})
+                                subs_copy[ani_id]['episodes'].pop(ep_num)
+                            last_matched_ep = y
+                        subs_copy[following_id] = following_entry
+                        
+                else:   
+                    if len(subs_copy[ani_id]['episodes']) > 1:
+                        index_key = get_key_by_index(working_entry, x + 1)
+                        subs_eps = index_key.split('-')[1]
+                        if int(subs_eps) > episode_count:
+                            following_entry = {}
+                            following_entry.update(subs_copy[ani_id])
+                            following_entry['episodes'] = working_entry[index_key]
+                            subs_copy[following_id] = following_entry
+                            subs_copy[ani_id]['episodes'].pop(index_key)
+                        else: 
+                            subs_copy[ani_id]['episodes'] = working_entry[index_key]
+    return subs_copy
+def get_key_by_index(dict, index):
+    x = 0
+    for key, value in dict.items():
+        if x == index:
+            return key
+        x += 1
+    pass
+    
+def search_google_for_anilist_id(subs_name):
+    search_string = subs_name.replace(' ', '+') + '+anilist'
+    headers = {
+        'User-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36'
+    }
+    titles = {}
+    similar_vals = []
+    data = requests.get(f"https://www.google.com/search?q={search_string}", headers=headers).text
+    ani_ids = re.findall(r"https://anilist.co/anime/(\d+)/", data)
+    ani_ids = [i for n, i in enumerate(ani_ids) if i not in ani_ids[:n]]
+    try:
+        return ani_ids[0]
+    except:
+        return None
+    #Made some code to sort the results, but lets trust google
+    for ani_id in ani_ids:
+        match_pattern = re.compile(rf"url=https://anilist.co/anime/{ani_id}/.*?h3.*?>(.*?)</h3")
+        title = re.search(match_pattern, data).group(1)
+        titles.update({ani_id: title})
+    for al_id in titles:
+        similar_val = similar(subs_name, titles[al_id])
+        similar_vals.append(similar_val)
+    max_similar = max(similar_vals)
+    similar_index = similar_vals.index(max_similar)
+    return ani_ids[similar_index]
+
 cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ani_subs.json')
-manual_adjustments_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'manual_adjustments.json')
-skip_list = ["Lee's Detective Agency", 
-            'Fruits Basket (2019)', 
-            'Fruits Basket (2019) S2', 
-            'Rail Romanesque S2', 
-            'Youjo Senki', 
-            'Mahouka Koukou no Rettousei',
-            'Tsugumomo S2 OVA',
-            'Edens Zero',
-            'Boruto - Naruto Next Generations',
-            'One Piece']
+manual_adjustments = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'manual_adjustments.json')
+skip_list = []
+# skip_list = ["Lee's Detective Agency", 
+#             'Fruits Basket (2019)', 
+#             'Fruits Basket (2019) S2', 
+#             'Rail Romanesque S2', 
+#             'Youjo Senki',     test = {}
+#             'Mahouka Koukou no Rettousei',
+#             'Tsugumomo S2 OVA',
+#             'Edens Zero',
+#             'Boruto - Naruto Next Generations',
+#             'One Piece']
 
 if __name__ == "__main__":
-  cache = load_cache()
-  updated_list = update_list(cache)
-  updated_entries = update_entries(updated_list)
-  save_cache(updated_entries)
-  for missing_entry in missing_ids:
-    print(missing_entry)
+    #anime_list = get_all_anime()
+    #subs_list = subs_to_ani(anime_list)
+    #save_json(cache_path, subs_list)
+    test_dict = get_all_anime()
+    converted_dict = subs_to_ani(test_dict)
+    subs_list = generate_seasons(converted_dict)
+    save_cache(subs_list)
+    pass

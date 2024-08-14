@@ -1,79 +1,39 @@
-import re, time
-from pynyaasi.nyaasi import NyaaSiClient
-import alfetcher
-import requests
-from spscraper import load_cache
+import os, json
+from alfetcher import get_anime_info
 
-missing_entries = []
-unknown_errors = []
+cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ani_subs.json')
 
-def verify_torrent(anime, torrents_local):
-    def append_prefix(epNumber):
-        if epNumber < 10:
-            return '0' + str(epNumber)
+def read_json(file_path):
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding="utf-8") as json_file:
+            data = json.load(json_file)
+        if data == {}:
+            return None
         else:
-            return str(epNumber)
-    global missing_entries
-    client = NyaaSiClient()
-    exceptions = {
-        '[-KS-] My Hero Academia (Boku no Hero Academia) S5 - 01 [1080p] [Dual Audio] [CC] [FUNimation] [D822D670]': 89
-    }
-    default_timeout = 60
-    while True:
-        try:
-            init_resource = client.get_resource(int(torrents_local[0][len('https://nyaa.si/view/'):])).title
-            break
-        except:
-            time.sleep(default_timeout)
-            default_timeout += 5
-    try:
-        init_ep = int(re.search(r"- (\d\d\d\d|\d\d\d|\d\d)", init_resource).group(1))
-    except Exception as e:
-        return # Skip when an anime has a first episode unconventional (SP, OVA...) or if its a movie, we dont need to check those
-    if init_resource in exceptions:
-        init_ep = exceptions[init_resource]
-    expected_ep = init_ep + 1
-    for x in range(1, len(torrents_local)):
-        torrent = torrents_local[x]
-        while True:
-            try:
-                resource = client.get_resource(int(torrent[len('https://nyaa.si/view/'):])).title
-                break
-            except requests.exceptions.HTTPError as e:
-                time.sleep(default_timeout)
-                default_timeout += 5
-                print(e)
-            except Exception as e:
-                unknown_errors.append(torrent)
-                print(e)
-                return
-        if not ('- ' + append_prefix(expected_ep)) in resource:
-            missing_entries.append(f'missing ep: {expected_ep}, {anime}')
-        expected_ep += 1
+            return data
+    else:
+        return None
 
-def verify_torrents():
-    # Load cache
-    cache = load_cache()
+def load_cache():
+    cache = read_json(cache_path)
+    return cache
 
-    # List of IDs to skip
-    skip_list_ids = [
-        '132096',
-        '135939',
-        '122148'
-    ]
-    for anime in cache:
-        anime_info = alfetcher.get_anime_info(anime)[anime]
-        if anime not in skip_list_ids and anime_info['status'] == 'RELEASING':
-            print(f'verifying {anime}')
-            anime_links = cache[anime]['nyaasi_links']
-            verify_torrent(anime, anime_links)
-                
-verify_torrents()
-if missing_entries or unknown_errors:
-    if missing_entries:
-        for entry in missing_entries:
-            print(entry+'\n')
-    if unknown_errors:
-        for error in unknown_errors:
-            print(error+'\n')
-    exit(1)
+subs_list = load_cache()
+
+attention_please = {}
+
+for anime in subs_list:
+    if not subs_list[anime]['batch']:
+        anime_info = get_anime_info(anime)[anime]
+        eps = anime_info['total_eps']
+        if eps and int(eps) != len(subs_list[anime]['episodes']) and anime_info['status'] != 'RELEASING':
+            problem_dict = subs_list[anime]
+            attention_please.update({anime: eps})
+
+print("-------------------")
+for attention in attention_please:
+    print(f"{attention} has an incorrect number of episodes")
+    print(f"expected: {attention_please[attention]} , got {len(subs_list[attention]['episodes'])}")
+    print(subs_list[attention]['url'])
+    print(f"https://www.anilist.co/anime/{attention}")
+    print("-------------------")
