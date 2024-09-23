@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 from difflib import SequenceMatcher
 
 missing_ids = []
-entries_not_zero = []
 yanked_entries = []
 
 def get_all_anime():
@@ -279,8 +278,11 @@ def generate_seasons(subs_list):
         working_entry = copy.deepcopy(subs_copy[ani_id]['episodes'])
         subs_copy[ani_id]['specials'] = {}
         anime_data = get_anime_info(ani_id)[ani_id]
-        episode_count = anime_data['total_eps']
-        episode_count = 9999 if not episode_count else episode_count
+        episode_count = anime_data['total_eps'] 
+        if not episode_count:
+            episode_count = 9999
+        if ani_id == '146065':
+            episode_count = 12
         start_ep_num = 1
         seasons_info = get_season_ranges(ani_id)
         season_ranges = seasons_info[0]
@@ -288,11 +290,10 @@ def generate_seasons(subs_list):
         for ep in working_entry:
             try:
                 if not int(ep) < 2:
-                    entries_not_zero.append(ani_id)
                     start_ep_num = int(ep)
             except:
                 pass
-            if ep == '00':
+            if ep == '00' and int(ani_id) != 146065:
                 subs_copy[ani_id]['specials'].update({ep: working_entry[ep]})
                 working_entry.pop(ep)
             break
@@ -308,13 +309,13 @@ def generate_seasons(subs_list):
         if not subs_copy[ani_id]['episodes'] and not subs_copy[ani_id]['specials']:
             subs_copy.pop(ani_id)
             continue
-        if subs_copy[ani_id]['specials'] and not subs_copy[ani_id]['episodes']:
-            subs_copy[ani_id]['episodes'] = subs_copy[ani_id]['specials']
-            subs_copy[ani_id]['specials'] = {}
         working_entry = modif_entries
+        subs_copy[ani_id]['episodes'] = working_entry
         if not subs_copy[ani_id]['specials']:
             subs_copy[ani_id].pop('specials')
-        subs_copy[ani_id]['episodes'] = working_entry
+        elif not subs_copy[ani_id]['episodes']:
+            subs_copy[ani_id]['episodes'] = subs_copy[ani_id]['specials']
+            subs_copy[ani_id].pop('specials')
         if start_ep_num != 1:
             for season in season_ranges:
                 if season_ranges[season]['start'] <= start_ep_num and start_ep_num <= season_ranges[season]['end']:
@@ -334,6 +335,9 @@ def generate_seasons(subs_list):
                 range_start = season_ids.index(ani_id) + 1 if start_ep_num > 1 else 0
             except:
                 range_start = 0
+            last_matched_ep = 0
+            y = 0
+            x = 0
             for x in range(range_start, len(season_ids)):
                 following_id = season_ids[x]
                 if not subs_copy[ani_id]['batch']:
@@ -350,15 +354,13 @@ def generate_seasons(subs_list):
                                 real_num = str(y - season_ranges[season_ids[x - 1]]['end'] ) if y - season_ranges[season_ids[x - 1]]['end'] > 9 else '0' + str(y - season_ranges[season_ids[x - 1]]['end'] )
                                 following_entry['episodes'].update({real_num: working_entry[ep_num]})
                         else:
-                            last_matched_ep = 0
-                            for y in range(episode_count + last_matched_ep + 1, subs_eps + 1):
+                            for y in range(episode_count + last_matched_ep + 1, subs_eps):
                                 ep_num = str(y) if y > 9 else '0' + str(y)
                                 real_num = str(y - episode_count) if y - episode_count > 9 else '0' + str(y - episode_count)
                                 following_entry['episodes'].update({real_num: working_entry[ep_num]})
                                 subs_copy[ani_id]['episodes'].pop(ep_num)
                             last_matched_ep = y
                         subs_copy[following_id] = following_entry
-                        
                 else:   
                     if len(subs_copy[ani_id]['episodes']) > 1:
                         index_key = get_key_by_index(working_entry, x + 1)
@@ -366,11 +368,11 @@ def generate_seasons(subs_list):
                         if int(subs_eps) > episode_count:
                             following_entry = {}
                             following_entry.update(subs_copy[ani_id])
-                            following_entry['episodes'] = working_entry[index_key]
+                            following_entry['episodes'] = {index_key: working_entry[index_key]}
                             subs_copy[following_id] = following_entry
                             subs_copy[ani_id]['episodes'].pop(index_key)
                         else: 
-                            subs_copy[ani_id]['episodes'] = working_entry[index_key]
+                            subs_copy[ani_id]['episodes'] = {index_key: working_entry[index_key]}
     return subs_copy
 def get_key_by_index(dict, index):
     x = 0
