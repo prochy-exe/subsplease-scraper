@@ -15055,7 +15055,8 @@
             "https://nyaa.si/view/1867955",
             "https://nyaa.si/view/1871092",
             "https://nyaa.si/view/1873987",
-            "https://nyaa.si/view/1876852"
+            "https://nyaa.si/view/1876852",
+            "https://nyaa.si/view/1879139"
         ]
     },
     "160173": {
@@ -15084,6 +15085,13 @@
         "id": "818",
         "nyaasi_links": [
             "https://nyaa.si/view/1878561"
+        ]
+    },
+    "175019": {
+        "url": "https://subsplease.org/shows/nageki-no-bourei-wa-intai-shitai",
+        "id": "819",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1879191"
         ]
     }
 }
