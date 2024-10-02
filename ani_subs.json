@@ -14422,7 +14422,8 @@
             "https://nyaa.si/view/1868809",
             "https://nyaa.si/view/1871716",
             "https://nyaa.si/view/1874780",
-            "https://nyaa.si/view/1877419"
+            "https://nyaa.si/view/1877419",
+            "https://nyaa.si/view/1879641"
         ]
     },
     "162804": {
@@ -15106,6 +15107,28 @@
         "id": "822",
         "nyaasi_links": [
             "https://nyaa.si/view/1879535"
+        ]
+    },
+    "170578": {
+        "url": "https://subsplease.org/shows/a-herbivorous-dragon-of-5000-years-gets-unfairly-villainized-s2",
+        "id": "823",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1879896"
+        ]
+    },
+    "157965": {
+        "url": "https://subsplease.org/shows/acro-trip",
+        "id": "824",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1879899",
+            "https://nyaa.si/view/1879902"
+        ]
+    },
+    "164172": {
+        "url": "https://subsplease.org/shows/amagami-san-chi-no-enmusubi",
+        "id": "821",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1879560"
         ]
     }
 }
