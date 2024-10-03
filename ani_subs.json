@@ -15079,7 +15079,8 @@
         "url": "https://subsplease.org/shows/hitoribocchi-no-isekai-kouryaku",
         "id": "817",
         "nyaasi_links": [
-            "https://nyaa.si/view/1877919"
+            "https://nyaa.si/view/1877919",
+            "https://nyaa.si/view/1880243"
         ]
     },
     "168500": {
@@ -15144,6 +15145,13 @@
         "id": "833",
         "nyaasi_links": [
             "https://nyaa.si/view/1880180"
+        ]
+    },
+    "179919": {
+        "url": "https://subsplease.org/shows/negaposi-angler",
+        "id": "832",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1880195"
         ]
     }
 }
