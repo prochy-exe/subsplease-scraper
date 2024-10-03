@@ -1784,7 +1784,8 @@
             "https://nyaa.si/view/1869645",
             "https://nyaa.si/view/1872421",
             "https://nyaa.si/view/1875502",
-            "https://nyaa.si/view/1877934"
+            "https://nyaa.si/view/1877934",
+            "https://nyaa.si/view/1880392"
         ]
     },
     "101705": {
@@ -15166,6 +15167,13 @@
         "id": "828",
         "nyaasi_links": [
             "https://nyaa.si/view/1880352"
+        ]
+    },
+    "169315": {
+        "url": "https://subsplease.org/shows/trillion-game",
+        "id": "827",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1880373"
         ]
     }
 }
