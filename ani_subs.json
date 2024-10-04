@@ -15173,7 +15173,22 @@
         "url": "https://subsplease.org/shows/trillion-game",
         "id": "827",
         "nyaasi_links": [
-            "https://nyaa.si/view/1880373"
+            "https://nyaa.si/view/1880373",
+            "https://nyaa.si/view/1880490"
+        ]
+    },
+    "171018": {
+        "url": "https://subsplease.org/shows/dandadan",
+        "id": "830",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1880484"
+        ]
+    },
+    "101915": {
+        "url": "https://subsplease.org/shows/mecha-ude",
+        "id": "829",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1880487"
         ]
     }
 }
