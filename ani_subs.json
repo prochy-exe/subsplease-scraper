@@ -12806,7 +12806,8 @@
             "https://nyaa.si/view/1870712",
             "https://nyaa.si/view/1873533",
             "https://nyaa.si/view/1876430",
-            "https://nyaa.si/view/1878786"
+            "https://nyaa.si/view/1878786",
+            "https://nyaa.si/view/1881389"
         ]
     },
     "157765": {
@@ -15237,6 +15238,13 @@
         "id": "839",
         "nyaasi_links": [
             "https://nyaa.si/view/1881187"
+        ]
+    },
+    "172190": {
+        "url": "https://subsplease.org/shows/kimi-wa-meido-sama",
+        "id": "838",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1881192"
         ]
     }
 }
