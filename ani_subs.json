@@ -15119,7 +15119,8 @@
         "url": "https://subsplease.org/shows/rekishi-ni-nokoru-akujo-ni-naru-zo",
         "id": "822",
         "nyaasi_links": [
-            "https://nyaa.si/view/1879535"
+            "https://nyaa.si/view/1879535",
+            "https://nyaa.si/view/1882568"
         ]
     },
     "170578": {
@@ -15141,7 +15142,8 @@
         "url": "https://subsplease.org/shows/amagami-san-chi-no-enmusubi",
         "id": "821",
         "nyaasi_links": [
-            "https://nyaa.si/view/1879560"
+            "https://nyaa.si/view/1879560",
+            "https://nyaa.si/view/1882609"
         ]
     },
     "165810": {
@@ -15291,6 +15293,27 @@
         "id": "843",
         "nyaasi_links": [
             "https://nyaa.si/view/1882248"
+        ]
+    },
+    "170732": {
+        "url": "https://subsplease.org/shows/dungeon-ni-deai-wo-motomeru-no-wa-machigatteiru-darou-ka-s5",
+        "id": "826",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1880174"
+        ]
+    },
+    "155502": {
+        "url": "https://subsplease.org/shows/love-live-superstar-s3",
+        "id": "847",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1882379"
+        ]
+    },
+    "171545": {
+        "url": "https://subsplease.org/shows/youkai-gakkou-no-sensei-hajimemashita",
+        "id": "848",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1882539"
         ]
     }
 }
