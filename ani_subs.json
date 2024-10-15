@@ -15341,14 +15341,16 @@
         "url": "https://subsplease.org/shows/love-live-superstar-s3",
         "id": "847",
         "nyaasi_links": [
-            "https://nyaa.si/view/1882379"
+            "https://nyaa.si/view/1882379",
+            "https://nyaa.si/view/1885877"
         ]
     },
     "171545": {
         "url": "https://subsplease.org/shows/youkai-gakkou-no-sensei-hajimemashita",
         "id": "848",
         "nyaasi_links": [
-            "https://nyaa.si/view/1882539"
+            "https://nyaa.si/view/1882539",
+            "https://nyaa.si/view/1886204"
         ]
     },
     "164299": {
@@ -15371,6 +15373,13 @@
         "id": "852",
         "nyaasi_links": [
             "https://nyaa.si/view/1884479"
+        ]
+    },
+    "154473": {
+        "url": "https://subsplease.org/shows/arifureta-shokugyou-de-sekai-saikyou-s3",
+        "id": "853",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1886112"
         ]
     }
 }
