@@ -15334,7 +15334,8 @@
         "id": "846",
         "nyaasi_links": [
             "https://nyaa.si/view/1882096",
-            "https://nyaa.si/view/1885585"
+            "https://nyaa.si/view/1885585",
+            "https://nyaa.si/view/1889089"
         ]
     },
     "170468": {
@@ -15417,6 +15418,34 @@
         "id": "853",
         "nyaasi_links": [
             "https://nyaa.si/view/1886112"
+        ]
+    },
+    "169258": {
+        "url": "https://subsplease.org/shows/ao-no-miburo",
+        "id": "856",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1888791"
+        ]
+    },
+    "180599": {
+        "url": "https://subsplease.org/shows/bananya-around-the-world",
+        "id": "857",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1888800"
+        ]
+    },
+    "163147": {
+        "url": "https://subsplease.org/shows/blue-lock-episode-nagi",
+        "id": "855",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1888796"
+        ]
+    },
+    "182469": {
+        "url": "https://subsplease.org/shows/one-piece-fan-letter",
+        "id": "854",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1888784"
         ]
     }
 }
