@@ -15643,7 +15643,8 @@
         "url": "https://subsplease.org/shows/bananya-around-the-world",
         "id": "857",
         "nyaasi_links": [
-            "https://nyaa.si/view/1888800"
+            "https://nyaa.si/view/1888800",
+            "https://nyaa.si/view/1903793"
         ]
     },
     "163147": {
@@ -15675,6 +15676,13 @@
             "https://nyaa.si/view/1897590",
             "https://nyaa.si/view/1900492",
             "https://nyaa.si/view/1903379"
+        ]
+    },
+    "134761": {
+        "url": "https://subsplease.org/shows/mobile-suit-gundam-seed-freedom",
+        "id": "863",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1903808"
         ]
     }
 }
