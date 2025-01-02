@@ -15882,5 +15882,34 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1915869"
         ]
+    },
+    "176642": {
+        "url": "https://subsplease.org/shows/ameku-takao-no-suiri-karte",
+        "id": "875",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1917100",
+            "https://nyaa.si/view/1917104"
+        ]
+    },
+    "145740": {
+        "url": "https://subsplease.org/shows/grisaia-phantom-trigger",
+        "id": "874",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1917098"
+        ]
+    },
+    "177506": {
+        "url": "https://subsplease.org/shows/izure-saikyou-no-renkinjutsushi",
+        "id": "873",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1917095"
+        ]
+    },
+    "179689": {
+        "url": "https://subsplease.org/shows/salaryman-ga-isekai-ni-ittara-shitennou-ni-natta-hanashi",
+        "id": "872",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1917092"
+        ]
     }
 }
