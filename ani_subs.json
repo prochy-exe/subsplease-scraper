@@ -14771,7 +14771,8 @@
             "https://nyaa.si/view/1906485",
             "https://nyaa.si/view/1909187",
             "https://nyaa.si/view/1911925",
-            "https://nyaa.si/view/1914319"
+            "https://nyaa.si/view/1914319",
+            "https://nyaa.si/view/1918027"
         ]
     },
     "171031": {
@@ -15957,6 +15958,13 @@
         "id": "882",
         "nyaasi_links": [
             "https://nyaa.si/view/1917866"
+        ]
+    },
+    "170650": {
+        "url": "https://subsplease.org/shows/kisaki-kyouiku-kara-nigetai-watashi",
+        "id": "886",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1918098"
         ]
     }
 }
