@@ -15880,7 +15880,8 @@
             "https://nyaa.si/view/1908412",
             "https://nyaa.si/view/1911168",
             "https://nyaa.si/view/1913627",
-            "https://nyaa.si/view/1915818"
+            "https://nyaa.si/view/1915818",
+            "https://nyaa.si/view/1919848"
         ]
     },
     "170166": {
@@ -15945,7 +15946,8 @@
         "url": "https://subsplease.org/shows/class-no-daikirai-na-joshi-to-kekkon-suru-koto-ni-natta",
         "id": "879",
         "nyaasi_links": [
-            "https://nyaa.si/view/1917482"
+            "https://nyaa.si/view/1917482",
+            "https://nyaa.si/view/1919869"
         ]
     },
     "174654": {
@@ -16087,6 +16089,13 @@
         "id": "901",
         "nyaasi_links": [
             "https://nyaa.si/view/1919798"
+        ]
+    },
+    "167143": {
+        "url": "https://subsplease.org/shows/girumasu",
+        "id": "900",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1919903"
         ]
     }
 }
