@@ -15964,14 +15964,16 @@
         "url": "https://subsplease.org/shows/ao-no-exorcist-yosuga-hen",
         "id": "884",
         "nyaasi_links": [
-            "https://nyaa.si/view/1917855"
+            "https://nyaa.si/view/1917855",
+            "https://nyaa.si/view/1920375"
         ]
     },
     "166699": {
         "url": "https://subsplease.org/shows/okitsura",
         "id": "882",
         "nyaasi_links": [
-            "https://nyaa.si/view/1917866"
+            "https://nyaa.si/view/1917866",
+            "https://nyaa.si/view/1920386"
         ]
     },
     "170650": {
@@ -16106,6 +16108,13 @@
         "id": "904",
         "nyaasi_links": [
             "https://nyaa.si/view/1920303"
+        ]
+    },
+    "180812": {
+        "url": "https://subsplease.org/shows/aparida",
+        "id": "903",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1920347"
         ]
     }
 }
