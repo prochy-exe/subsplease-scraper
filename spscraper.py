@@ -45,33 +45,6 @@ def get_all_anime():
         print("Failed to retrieve webpage. Status code:", response.status_code)
     return items_dict
 
-def is_releasing(anime_id):
-    from alfetcher import get_anime_info
-    while anime_id:
-        anime_info = get_anime_info(anime_id)[anime_id]
-        anime_state = find_key(anime_info, 'status')
-        related_anime = find_key(anime_info, 'related')
-        status = False
-        if anime_state == 'RELEASING':
-            status = True
-            break
-        else:
-            if related_anime:
-                anime_id = None
-                for relation in related_anime:
-                    if related_anime[relation]['type'] == 'SEQUEL':
-                        anime_id = relation
-                        if related_anime[relation]['status'] == 'RELEASING':
-                            status = True
-                            break
-                        elif related_anime[relation]['status'] == 'NOT_YET_RELEASED':
-                            if 'release_date' in related_anime[relation]:
-                                status = True
-                            break
-            else:
-                break
-    return status
-
 def get_data(url):
     # Send a GET request to the URL
     response = requests.get(url)
@@ -95,15 +68,15 @@ def get_data(url):
         item[title] = {}
         item[title]['url'] = url
         item[title]['id'] = sid_value
-        torrent_link = get_torrent_link(item[title]['id'])
-        item[title]['episodes'] = torrent_link[0]
-        item[title]['batch'] = torrent_link[1]
+        torrent_links = get_torrent_links(item[title]['id'])
+        item[title]['batches'] = torrent_links[0]
+        item[title]['episodes'] = torrent_links[1]
         
         return item
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
 
-def get_torrent_link(sub_id):
+def get_torrent_links(sub_id):
 
     def get_magnets(torrent_dict):
         def get_hq_int(downloads):
@@ -139,16 +112,15 @@ def get_torrent_link(sub_id):
     url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
     headers = {'Content-Type': 'application/json'}
     response = requests.get(url, headers=headers)
-    torrent_links = {}
-    batch_state = False
+    batches = {}
+    episodes = {}
     if response.status_code == 200:
         json_data = response.json()
         if json_data['batch']:
-            torrent_links.update(get_magnets(json_data['batch']))
-            batch_state = True
-        elif json_data['episode']:
-            torrent_links.update(get_magnets(json_data['episode']))
-    return torrent_links, batch_state
+            batches.update(get_magnets(json_data['batch']))
+        if json_data['episode']:
+            episodes.update(get_magnets(json_data['episode']))
+    return batches, episodes
     
 #Utils
 
@@ -230,50 +202,17 @@ def subs_to_ani(anime_list):
                 al_id = search_google_for_anilist_id(search_string)
                 if al_id is None:
                     missing_ids.append(anime)
-            if al_id:        
-                al_list.update({al_id: anime_list[anime]})
+                    continue
+            al_list.update({al_id: anime_list[anime]})
+            save_json('manual_adjustments.json', {anime: al_id}, False)
     return al_list
 
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
-def get_season_ranges(anime_id):
-    from alfetcher import get_anime_info
-    starting_id = anime_id
-    season_ranges = {}
-    season_ids = []
-    anime_info = get_anime_info(anime_id)[anime_id]
-    range_start = 1
-    try:
-        range_end = int(anime_info['total_eps'])
-    except:
-        range_end = 9999
-    while anime_id:
-        anime_info = get_anime_info(anime_id)[anime_id]
-        season_ranges[anime_id] = {'start': range_start, 'end': range_end, 'total_eps': anime_info['total_eps']}
-        related_anime = anime_info['related']
-        if related_anime:
-            anime_id = None
-            for relation in related_anime:
-                relation_info = get_anime_info(relation)[relation]
-                if relation_info['format'] == 'TV' or anime_info['format'] != 'TV':
-                    if related_anime[relation]['type'] == 'SEQUEL' and related_anime[relation]['status'] != 'NOT_YET_RELEASED':
-                        season_ids.append(relation)
-                        range_start = range_end + 1
-                        try:
-                            range_end = range_start + int(relation_info['total_eps'])
-                        except:
-                            range_end = 9999
-                        anime_id = relation
-            if anime_id == starting_id:
-                print("Fatal error")
-        else:
-            break
-    return season_ranges, season_ids
-
 def generate_seasons(subs_list):
     subs_copy = copy.deepcopy(subs_list)
-    from alfetcher import get_anime_info
+    from alfetcher import get_anime_info, get_season_ranges
     for ani_id in subs_list:
         working_entry = copy.deepcopy(subs_copy[ani_id]['episodes'])
         subs_copy[ani_id]['specials'] = {}
@@ -427,8 +366,9 @@ if __name__ == "__main__":
     #anime_list = get_all_anime()
     #subs_list = subs_to_ani(anime_list)
     #save_json(cache_path, subs_list)
-    test_dict = get_all_anime()
+    test_dict = read_json('scraped_sb.json')
     converted_dict = subs_to_ani(test_dict)
+    save_json('converted_sb.json', converted_dict)
     subs_list = generate_seasons(converted_dict)
     save_cache(subs_list)
     pass
