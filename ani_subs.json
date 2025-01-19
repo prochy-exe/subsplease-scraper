@@ -12840,7 +12840,8 @@
             "https://nyaa.si/view/1911814",
             "https://nyaa.si/view/1914202",
             "https://nyaa.si/view/1917941",
-            "https://nyaa.si/view/1920499"
+            "https://nyaa.si/view/1920499",
+            "https://nyaa.si/view/1923289"
         ]
     },
     "157765": {
@@ -15864,7 +15865,8 @@
             "https://nyaa.si/view/1914213",
             "https://nyaa.si/view/1916208",
             "https://nyaa.si/view/1917948",
-            "https://nyaa.si/view/1920516"
+            "https://nyaa.si/view/1920516",
+            "https://nyaa.si/view/1923299"
         ]
     },
     "134761": {
@@ -16167,6 +16169,13 @@
         "id": "905",
         "nyaasi_links": [
             "https://nyaa.si/view/1920778"
+        ]
+    },
+    "162722": {
+        "url": "https://subsplease.org/shows/mahoutsukai-precure-mirai-days",
+        "id": "907",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1923222"
         ]
     }
 }
