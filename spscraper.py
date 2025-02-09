@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from difflib import SequenceMatcher
 
 missing_ids = []
-yanked_entries = []
+incorrect_ids = []
 
 def get_all_anime():
 
@@ -68,10 +68,7 @@ def get_data(url):
         item[title] = {}
         item[title]['url'] = url
         item[title]['id'] = sid_value
-        torrent_links = get_torrent_links(item[title]['id'])
-        item[title]['batches'] = torrent_links[0]
-        item[title]['episodes'] = torrent_links[1]
-        
+        item[title]['batches'], item[title]['episodes'], item[title]['specials'] = get_torrent_links(item[title]['id'])        
         return item
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
@@ -114,13 +111,19 @@ def get_torrent_links(sub_id):
     response = requests.get(url, headers=headers)
     batches = {}
     episodes = {}
+    specials = {}
     if response.status_code == 200:
         json_data = response.json()
         if json_data['batch']:
             batches.update(get_magnets(json_data['batch']))
         if json_data['episode']:
             episodes.update(get_magnets(json_data['episode']))
-    return batches, episodes
+            new_episodes = copy.deepcopy(episodes)
+            for episode in episodes:
+                if not episode.isdigit():
+                    specials[episode] = new_episodes.pop(episode)
+            episodes = new_episodes
+    return batches, episodes, specials
     
 #Utils
 
@@ -210,116 +213,81 @@ def subs_to_ani(anime_list):
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
-def generate_seasons(subs_list):
-    subs_copy = copy.deepcopy(subs_list)
+def process_anime(anime_id, anime_dict):
+    global seasons_dict
     from alfetcher import get_anime_info, get_season_ranges
-    for ani_id in subs_list:
-        working_entry = copy.deepcopy(subs_copy[ani_id]['episodes'])
-        subs_copy[ani_id]['specials'] = {}
-        anime_data = get_anime_info(ani_id)[ani_id]
-        episode_count = anime_data['total_eps'] 
-        if not episode_count:
-            episode_count = 9999
-        if ani_id == '146065':
-            episode_count = 12
-        start_ep_num = 1
-        seasons_info = get_season_ranges(ani_id)
-        season_ranges = seasons_info[0]
-        season_ids = seasons_info[1]
-        for ep in working_entry:
-            try:
-                if not int(ep) < 2:
-                    start_ep_num = int(ep)
-            except:
-                pass
-            if ep == '00' and int(ani_id) != 146065:
-                subs_copy[ani_id]['specials'].update({ep: working_entry[ep]})
-                working_entry.pop(ep)
-            break
-        modif_entries = copy.deepcopy(working_entry)
-        for ep in working_entry:
-            try:
-                int(ep)
-            except:
-                if not subs_copy[ani_id]['batch'] and episode_count > 1:
-                    subs_copy[ani_id]['specials'].update({ep: working_entry[ep]})
-                    modif_entries.pop(ep)
-        #remove empty dicts with no episodes
-        if not subs_copy[ani_id]['episodes'] and not subs_copy[ani_id]['specials']:
-            subs_copy.pop(ani_id)
-            continue
-        working_entry = modif_entries
-        subs_copy[ani_id]['episodes'] = working_entry
-        if not subs_copy[ani_id]['specials']:
-            subs_copy[ani_id].pop('specials')
-        elif not subs_copy[ani_id]['episodes']:
-            subs_copy[ani_id]['episodes'] = subs_copy[ani_id]['specials']
-            subs_copy[ani_id].pop('specials')
-        if start_ep_num != 1:
-            for season in season_ranges:
-                if season_ranges[season]['start'] <= start_ep_num and start_ep_num <= season_ranges[season]['end']:
-                    if season != ani_id:
-                        subs_copy[season] = subs_copy[ani_id]
-                        subs_copy.pop(ani_id)
-                        ani_id = season
-                        subs_copy[ani_id]['episodes'] = {}
-                        e = 1
-                        for ep in working_entry:
-                            if e <= season_ranges[season]['total_eps'] :
-                                en = str(e) if e > 9 else '0' + str(e)
-                                subs_copy[ani_id]['episodes'].update({en: working_entry[ep]})
-                                e += 1
-        if season_ids:
-            try:
-                range_start = season_ids.index(ani_id) + 1 if start_ep_num > 1 else 0
-            except:
-                range_start = 0
-            last_matched_ep = 0
-            y = 0
-            x = 0
-            for x in range(range_start, len(season_ids)):
-                following_id = season_ids[x]
-                if not subs_copy[ani_id]['batch']:
-                    subs_eps = len(working_entry)
-                    if subs_eps > episode_count:
-                        following_entry = {}
-                        following_entry.update(subs_copy[ani_id])
-                        following_entry['episodes'] = {}
-                        if start_ep_num != 1:
-                            for y in range(season_ranges[following_id]['start'], season_ranges[following_id]['end'] + 1):
-                                if y - start_ep_num >= subs_eps:
-                                    break
-                                ep_num = str(y) if y > 9 else '0' + str(y)
-                                real_num = str(y - season_ranges[season_ids[x - 1]]['end'] ) if y - season_ranges[season_ids[x - 1]]['end'] > 9 else '0' + str(y - season_ranges[season_ids[x - 1]]['end'] )
-                                following_entry['episodes'].update({real_num: working_entry[ep_num]})
+    def process_episodes(episode_torrents, working_season, working_id):
+        if episode_torrents:
+            skipped_eps = 0
+            total_eps = int(anime_info['total_eps']) if anime_info['total_eps'] else 99999
+            if int(list(episode_torrents.keys())[-1]) != total_eps:
+                episode_adjustment = episode_adjustments[working_id] if working_id in episode_adjustments else 0
+                seasons_dict[working_id]['episodes'] = {}
+                for org_episode in episode_torrents:
+                    while True:
+                        episode = int(org_episode) - episode_adjustment
+                        if episode <= int(season_ranges[working_season]['end']):
+                            if working_id not in seasons_dict:
+                                seasons_dict[working_id] = copy.deepcopy(anime_dict)
+                                seasons_dict[working_id]['episodes'] = {}
+                            seasons_dict[working_id]['episodes'][f"{(int(episode) - skipped_eps):02}"] = episode_torrents[f"{episode + episode_adjustment}"]
+                            break
                         else:
-                            for y in range(episode_count + last_matched_ep + 1, subs_eps):
-                                ep_num = str(y) if y > 9 else '0' + str(y)
-                                real_num = str(y - episode_count) if y - episode_count > 9 else '0' + str(y - episode_count)
-                                following_entry['episodes'].update({real_num: working_entry[ep_num]})
-                                subs_copy[ani_id]['episodes'].pop(ep_num)
-                            last_matched_ep = y
-                        subs_copy[following_id] = following_entry
-                else:   
-                    if len(subs_copy[ani_id]['episodes']) > 1:
-                        index_key = get_key_by_index(working_entry, x + 1)
-                        subs_eps = index_key.split('-')[1]
-                        if int(subs_eps) > episode_count:
-                            following_entry = {}
-                            following_entry.update(subs_copy[ani_id])
-                            following_entry['episodes'] = {index_key: working_entry[index_key]}
-                            subs_copy[following_id] = following_entry
-                            subs_copy[ani_id]['episodes'].pop(index_key)
-                        else: 
-                            subs_copy[ani_id]['episodes'] = {index_key: working_entry[index_key]}
-    return subs_copy
-def get_key_by_index(dict, index):
-    x = 0
-    for key, value in dict.items():
-        if x == index:
-            return key
-        x += 1
-    pass
+                            skipped_eps += season_ranges[working_season]['total_eps']
+                            working_season += 1
+                            working_id = str(season_ranges[working_season]['id'])
+                            episode_adjustment = episode_adjustments[working_id] if working_id in episode_adjustments else 0
+
+    def process_batches(batch_torrents, working_season, working_id):
+        if batch_torrents:
+            total_eps = int(anime_info['total_eps']) if anime_info['total_eps'] else 99999
+            if int(list(batch_torrents.keys())[-1].split('-')[1]) != total_eps:
+                seasons_dict[working_id]['batches'] = {}
+                for batch in batch_torrents:
+                    while True:
+                        if int(batch.split('-')[1]) <= int(season_ranges[working_season]['end']):
+                            if working_id not in seasons_dict:
+                                seasons_dict[working_id] = copy.deepcopy(anime_dict)
+                                seasons_dict[working_id]['batches'] = {}
+                            seasons_dict[working_id]['batches'][f"01-{season_ranges[working_season]['total_eps']:02}"] = batch_torrents[batch]
+                            break
+                        else:
+                            working_season += 1
+                            working_id = str(season_ranges[working_season]['id'])
+
+
+    working_season = 1
+    working_id = anime_id
+    if anime_id == '21311':
+        pass
+    anime_info = get_anime_info(anime_id)[anime_id]
+    season_ranges = get_season_ranges(anime_id)
+    seasons_dict = {anime_id: copy.deepcopy(anime_dict)}
+    episode_torrents = anime_dict['episodes']
+    batch_torrents = anime_dict['batches']
+    try:
+        process_episodes(episode_torrents, working_season, working_id)
+        process_batches(batch_torrents, working_season, working_id)
+        ids_to_remove = []
+        for season in seasons_dict:
+            if not seasons_dict[season]['episodes'] and not seasons_dict[season]['batches']:
+                ids_to_remove.append(season)
+        [seasons_dict.pop(season_id) for season_id in ids_to_remove]
+    except Exception as e:
+        seasons_dict = {}
+    return seasons_dict
+
+def generate_seasons(subs_list):
+    new_subs_list = copy.deepcopy(subs_list)
+    for anime in subs_list:
+        current_entry =  subs_list[anime]
+        season_entries = process_anime(anime, current_entry)
+        if season_entries:
+            new_subs_list.pop(anime)
+            new_subs_list.update(season_entries)
+        else:
+            incorrect_ids.append(anime)
+    return new_subs_list
     
 def search_google_for_anilist_id(subs_name):
     search_string = subs_name.replace(' ', '+') + '+anilist'
@@ -350,6 +318,7 @@ def search_google_for_anilist_id(subs_name):
 
 cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ani_subs.json')
 manual_adjustments = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'manual_adjustments.json')
+episode_adjustments = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'episode_adjustments.json')
 skip_list = []
 # skip_list = ["Lee's Detective Agency", 
 #             'Fruits Basket (2019)', 
@@ -363,12 +332,13 @@ skip_list = []
 #             'One Piece']
 
 if __name__ == "__main__":
-    #anime_list = get_all_anime()
-    #subs_list = subs_to_ani(anime_list)
-    #save_json(cache_path, subs_list)
-    test_dict = read_json('scraped_sb.json')
-    converted_dict = subs_to_ani(test_dict)
-    save_json('converted_sb.json', converted_dict)
+    # anime_list = get_all_anime()
+    # save_json('scraped_sb.json', anime_list)
+    # converted_dict = subs_to_ani(anime_list)
+    # save_json('converted_sb.json', converted_dict)
+    converted_dict = read_json('converted_sb.json')
     subs_list = generate_seasons(converted_dict)
     save_cache(subs_list)
+    save_json('incorrect_ids.json', {'incorrect_ids': incorrect_ids})
+    save_json('missing_ids.json', {'missing_ids': missing_ids})
     pass
