@@ -16554,7 +16554,8 @@
             "https://nyaa.si/view/1942973",
             "https://nyaa.si/view/1945909",
             "https://nyaa.si/view/1948711",
-            "https://nyaa.si/view/1951443"
+            "https://nyaa.si/view/1951443",
+            "https://nyaa.si/view/1954096"
         ]
     },
     "162722": {
@@ -16640,6 +16641,13 @@
         "id": "913",
         "nyaasi_links": [
             "https://nyaa.si/view/1942149"
+        ]
+    },
+    "183133": {
+        "url": "https://subsplease.org/shows/kanchigai-no-atelier-meister",
+        "id": "916",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1954079"
         ]
     }
 }
