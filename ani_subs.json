@@ -15994,7 +15994,8 @@
             "https://nyaa.si/view/1941140",
             "https://nyaa.si/view/1944123",
             "https://nyaa.si/view/1949792",
-            "https://nyaa.si/view/1952591"
+            "https://nyaa.si/view/1952591",
+            "https://nyaa.si/view/1955015"
         ]
     },
     "145740": {
@@ -16340,7 +16341,8 @@
             "https://nyaa.si/view/1944401",
             "https://nyaa.si/view/1947217",
             "https://nyaa.si/view/1949978",
-            "https://nyaa.si/view/1952767"
+            "https://nyaa.si/view/1952767",
+            "https://nyaa.si/view/1955209"
         ]
     },
     "172019": {
@@ -16676,6 +16678,13 @@
         "id": "921",
         "nyaasi_links": [
             "https://nyaa.si/view/1954919"
+        ]
+    },
+    "183161": {
+        "url": "https://subsplease.org/shows/the-beginning-after-the-end",
+        "id": "920",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1955040"
         ]
     }
 }
