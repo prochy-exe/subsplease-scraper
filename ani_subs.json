@@ -16088,7 +16088,8 @@
             "https://nyaa.si/view/1944568",
             "https://nyaa.si/view/1947385",
             "https://nyaa.si/view/1950169",
-            "https://nyaa.si/view/1952905"
+            "https://nyaa.si/view/1952905",
+            "https://nyaa.si/view/1955351"
         ]
     },
     "178462": {
@@ -16692,6 +16693,13 @@
         "id": "923",
         "nyaasi_links": [
             "https://nyaa.si/view/1955257"
+        ]
+    },
+    "179694": {
+        "url": "https://subsplease.org/shows/rock-wa-lady-no-tashinami-deshite",
+        "id": "924",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1955297"
         ]
     }
 }
