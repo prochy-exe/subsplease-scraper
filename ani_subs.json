@@ -16505,7 +16505,8 @@
             "https://nyaa.si/view/1945425",
             "https://nyaa.si/view/1948210",
             "https://nyaa.si/view/1951226",
-            "https://nyaa.si/view/1953629"
+            "https://nyaa.si/view/1953629",
+            "https://nyaa.si/view/1956171"
         ]
     },
     "180812": {
@@ -16742,6 +16743,13 @@
         "id": "930",
         "nyaasi_links": [
             "https://nyaa.si/view/1956116"
+        ]
+    },
+    "179054": {
+        "url": "https://subsplease.org/shows/kuroshitsuji-midori-no-majo-hen",
+        "id": "929",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1956139"
         ]
     }
 }
