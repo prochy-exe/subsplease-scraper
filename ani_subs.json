@@ -16611,7 +16611,8 @@
             "https://nyaa.si/view/1942665",
             "https://nyaa.si/view/1945702",
             "https://nyaa.si/view/1951163",
-            "https://nyaa.si/view/1953840"
+            "https://nyaa.si/view/1953840",
+            "https://nyaa.si/view/1956411"
         ]
     },
     "181970": {
@@ -16759,6 +16760,13 @@
         "id": "928",
         "nyaasi_links": [
             "https://nyaa.si/view/1956210"
+        ]
+    },
+    "156092": {
+        "url": "https://subsplease.org/shows/to-be-hero-x",
+        "id": "927",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1956382"
         ]
     }
 }
