@@ -16663,7 +16663,8 @@
         "url": "https://subsplease.org/shows/kijin-gentoushou",
         "id": "917",
         "nyaasi_links": [
-            "https://nyaa.si/view/1954323"
+            "https://nyaa.si/view/1954323",
+            "https://nyaa.si/view/1957113"
         ]
     },
     "178701": {
@@ -16811,6 +16812,27 @@
         "id": "942",
         "nyaasi_links": [
             "https://nyaa.si/view/1957065"
+        ]
+    },
+    "158287": {
+        "url": "https://subsplease.org/shows/compass-2-0-sentou-setsuri-kaiseki-system",
+        "id": "939",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1957157"
+        ]
+    },
+    "143200": {
+        "url": "https://subsplease.org/shows/summer-pockets",
+        "id": "940",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1957115"
+        ]
+    },
+    "185736": {
+        "url": "https://subsplease.org/shows/vigilante-boku-no-hero-academia-illegals",
+        "id": "941",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1957134"
         ]
     }
 }
