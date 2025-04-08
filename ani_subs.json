@@ -16671,7 +16671,8 @@
         "url": "https://subsplease.org/shows/aru-majo-ga-shinu-made",
         "id": "919",
         "nyaasi_links": [
-            "https://nyaa.si/view/1954658"
+            "https://nyaa.si/view/1954658",
+            "https://nyaa.si/view/1957449"
         ]
     },
     "184279": {
@@ -16833,6 +16834,13 @@
         "id": "941",
         "nyaasi_links": [
             "https://nyaa.si/view/1957134"
+        ]
+    },
+    "174802": {
+        "url": "https://subsplease.org/shows/shiunji-ke-no-kodomotachi",
+        "id": "945",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1957432"
         ]
     }
 }
