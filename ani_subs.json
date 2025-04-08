@@ -16679,7 +16679,8 @@
         "url": "https://subsplease.org/shows/ballpark-de-tsukamaete",
         "id": "918",
         "nyaasi_links": [
-            "https://nyaa.si/view/1954714"
+            "https://nyaa.si/view/1954714",
+            "https://nyaa.si/view/1957513"
         ]
     },
     "179965": {
@@ -16841,6 +16842,13 @@
         "id": "945",
         "nyaasi_links": [
             "https://nyaa.si/view/1957432"
+        ]
+    },
+    "180675": {
+        "url": "https://subsplease.org/shows/apocalypse-hotel",
+        "id": "944",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1957564"
         ]
     }
 }
