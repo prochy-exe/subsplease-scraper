@@ -16695,7 +16695,8 @@
         "url": "https://subsplease.org/shows/the-beginning-after-the-end",
         "id": "920",
         "nyaasi_links": [
-            "https://nyaa.si/view/1955040"
+            "https://nyaa.si/view/1955040",
+            "https://nyaa.si/view/1957852"
         ]
     },
     "120709": {
@@ -16850,6 +16851,13 @@
         "id": "944",
         "nyaasi_links": [
             "https://nyaa.si/view/1957564"
+        ]
+    },
+    "177120": {
+        "url": "https://subsplease.org/shows/ninja-to-koroshiya-no-futarigurashi",
+        "id": "946",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1958113"
         ]
     }
 }
