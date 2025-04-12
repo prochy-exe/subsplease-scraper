@@ -16776,7 +16776,8 @@
         "url": "https://subsplease.org/shows/classic-stars",
         "id": "928",
         "nyaasi_links": [
-            "https://nyaa.si/view/1956210"
+            "https://nyaa.si/view/1956210",
+            "https://nyaa.si/view/1958988"
         ]
     },
     "156092": {
@@ -16889,6 +16890,13 @@
         "id": "950",
         "nyaasi_links": [
             "https://nyaa.si/view/1958938"
+        ]
+    },
+    "185939": {
+        "url": "https://subsplease.org/shows/hibi-wa-sugiredo-meshi-umashi",
+        "id": "949",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1958971"
         ]
     }
 }
