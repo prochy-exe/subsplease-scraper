@@ -16527,7 +16527,8 @@
             "https://nyaa.si/view/1945463",
             "https://nyaa.si/view/1950964",
             "https://nyaa.si/view/1953680",
-            "https://nyaa.si/view/1956182"
+            "https://nyaa.si/view/1956182",
+            "https://nyaa.si/view/1958951"
         ]
     },
     "170892": {
@@ -16881,6 +16882,13 @@
         "id": "948",
         "nyaasi_links": [
             "https://nyaa.si/view/1958537"
+        ]
+    },
+    "176246": {
+        "url": "https://subsplease.org/shows/mono",
+        "id": "950",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1958938"
         ]
     }
 }
