@@ -16623,7 +16623,8 @@
             "https://nyaa.si/view/1953840",
             "https://nyaa.si/view/1956411",
             "https://nyaa.si/view/1959153",
-            "https://nyaa.si/view/1961658"
+            "https://nyaa.si/view/1961658",
+            "https://nyaa.si/view/1964661"
         ]
     },
     "181970": {
@@ -16824,7 +16825,8 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1956382",
             "https://nyaa.si/view/1959139",
-            "https://nyaa.si/view/1961628"
+            "https://nyaa.si/view/1961628",
+            "https://nyaa.si/view/1964632"
         ]
     },
     "180367": {
@@ -17024,6 +17026,13 @@
         "id": "957",
         "nyaasi_links": [
             "https://nyaa.si/view/1963730"
+        ]
+    },
+    "164212": {
+        "url": "https://subsplease.org/shows/girls-band-cry",
+        "id": "958",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1964564"
         ]
     }
 }
