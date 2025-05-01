@@ -16723,7 +16723,8 @@
             "https://nyaa.si/view/1955040",
             "https://nyaa.si/view/1957852",
             "https://nyaa.si/view/1960488",
-            "https://nyaa.si/view/1963067"
+            "https://nyaa.si/view/1963067",
+            "https://nyaa.si/view/1966114"
         ]
     },
     "120709": {
@@ -16949,7 +16950,8 @@
         "nyaasi_links": [
             "https://nyaa.si/view/1958113",
             "https://nyaa.si/view/1960667",
-            "https://nyaa.si/view/1963311"
+            "https://nyaa.si/view/1963311",
+            "https://nyaa.si/view/1966306"
         ]
     },
     "176702": {
@@ -17058,6 +17060,13 @@
         "id": "959",
         "nyaasi_links": [
             "https://nyaa.si/view/1965099"
+        ]
+    },
+    "120343": {
+        "url": "https://subsplease.org/shows/mo-dao-zu-shi-q",
+        "id": "960",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1966157"
         ]
     }
 }
