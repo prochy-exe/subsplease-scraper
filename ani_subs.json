@@ -16900,7 +16900,8 @@
             "https://nyaa.si/view/1957056",
             "https://nyaa.si/view/1959764",
             "https://nyaa.si/view/1962205",
-            "https://nyaa.si/view/1965316"
+            "https://nyaa.si/view/1965316",
+            "https://nyaa.si/view/1967981"
         ]
     },
     "165445": {
@@ -16910,7 +16911,8 @@
             "https://nyaa.si/view/1957065",
             "https://nyaa.si/view/1959780",
             "https://nyaa.si/view/1962216",
-            "https://nyaa.si/view/1965330"
+            "https://nyaa.si/view/1965330",
+            "https://nyaa.si/view/1967993"
         ]
     },
     "158287": {
@@ -17091,6 +17093,13 @@
         "id": "960",
         "nyaasi_links": [
             "https://nyaa.si/view/1966157"
+        ]
+    },
+    "144779": {
+        "url": "https://subsplease.org/shows/yamato-yo-towa-ni-rebel-3199",
+        "id": "961",
+        "nyaasi_links": [
+            "https://nyaa.si/view/1967831"
         ]
     }
 }
