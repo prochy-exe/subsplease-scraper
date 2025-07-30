@@ -29,18 +29,17 @@ def get_all_anime():
         for link in all_shows_links:
             anime_title = link.a['title']
             listing_url = base + link.a['href']
-            if anime_title not in skip_list: 
-                anime_info = get_data(listing_url)
-                if not anime_info:
-                    continue
-                # Set the proper dictionary entry
-                try:
+            anime_info = get_data(listing_url)
+            if not anime_info:
+                continue
+            # Set the proper dictionary entry
+            try:
+                dict_entry = anime_info[anime_title]
+            except:
+                for entry in anime_info:
+                    anime_title = entry
                     dict_entry = anime_info[anime_title]
-                except:
-                    for entry in anime_info:
-                        anime_title = entry
-                        dict_entry = anime_info[anime_title]
-                items_dict[anime_title] = dict_entry
+            items_dict[anime_title] = dict_entry
     else:
         print("Failed to retrieve webpage. Status code:", response.status_code)
     return items_dict
@@ -93,6 +92,11 @@ def get_torrent_links(sub_id):
                 return hd
             else:
                 return sd
+
+        def parse_date(time_string):
+            time_string = time_string.split('/')
+            return f'20{time_string[2]}' + '-' + time_string[0] + '-' + time_string[1]    
+         
         cleaned_dict = {}
         for key in torrent_dict:
             try: #try to match the episode number
@@ -103,7 +107,7 @@ def get_torrent_links(sub_id):
                 continue
             if re.search(r"v\d+", adjusted_key): #remove version numbers from the number of the ep
                 adjusted_key = re.sub(r"v\d+", "", adjusted_key)
-            cleaned_dict.update({adjusted_key: torrent_dict[key]['downloads'][get_hq_int(torrent_dict[key]['downloads'])]['magnet']})
+            cleaned_dict.update({adjusted_key: {'date': parse_date(key['time']), 'magnet': torrent_dict[key]['downloads'][get_hq_int(torrent_dict[key]['downloads'])]['magnet']}})
         return {k: cleaned_dict[k] for k in sorted(cleaned_dict, key=lambda x: list(cleaned_dict.keys()).index(x), reverse=True)}
     
     url = f'https://subsplease.org/api/?f=show&tz=Europe/Prague&sid={sub_id}'
@@ -319,23 +323,11 @@ def search_google_for_anilist_id(subs_name):
 cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'ani_subs.json')
 manual_adjustments = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'manual_adjustments.json')
 episode_adjustments = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'episode_adjustments.json')
-skip_list = []
-# skip_list = ["Lee's Detective Agency", 
-#             'Fruits Basket (2019)', 
-#             'Fruits Basket (2019) S2', 
-#             'Rail Romanesque S2', 
-#             'Youjo Senki',     test = {}
-#             'Mahouka Koukou no Rettousei',
-#             'Tsugumomo S2 OVA',
-#             'Edens Zero',
-#             'Boruto - Naruto Next Generations',
-#             'One Piece']
 
 if __name__ == "__main__":
-    # anime_list = get_all_anime()
-    # save_json('scraped_sb.json', anime_list)
-    # converted_dict = subs_to_ani(anime_list)
-    # save_json('converted_sb.json', converted_dict)
+    anime_list = get_all_anime()
+    converted_dict = subs_to_ani(anime_list)
+    save_json('converted_sb.json', converted_dict)
     converted_dict = read_json('converted_sb.json')
     subs_list = generate_seasons(converted_dict)
     save_cache(subs_list)
